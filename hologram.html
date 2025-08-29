@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Hologram Museum Research - Ruiyu Wang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #5a67d8;
+        }
+
+        .hero-section {
+            margin-top: 80px;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .project-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.3s forwards;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.5s forwards;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: slideUp 1s ease 0.7s forwards;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .research-setup {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .setup-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .setup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .results-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .implications-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .implications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .implication-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .implication-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .skills-showcase {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 500;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .cta-section {
+            background: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .visual-separator {
+            height: 100px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-meta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Ruiyu Wang</a>
+            <a href="#" class="back-link">
+                <span>←</span>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="project-title">3D Hologram Museum Research</h1>
+                <p class="project-subtitle">Investigating the Effects of Pepper's Ghost Technology on Knowledge Acquisition and Visitor Experience</p>
+                <div class="project-meta">
+                    <div class="meta-item">Bachelor's Thesis</div>
+                    <div class="meta-item">University of Tübingen</div>
+                    <div class="meta-item">2024</div>
+                    <div class="meta-item">Cognitive Science</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="section-grid">
+                <div>
+                    <h2 class="section-title">Project Overview</h2>
+                    <p class="section-text">
+                        This research investigated whether Pepper's Ghost holographic technology could enhance museum visitor experiences and learning outcomes compared to traditional screen displays. The study was conducted in collaboration with the Leibniz Institute for Knowledge Media and focused on a maritime museum exhibition context.
+                    </p>
+                    <p class="section-text">
+                        The research addressed a critical gap in understanding how emerging display technologies impact cognitive processing, knowledge retention, and overall visitor engagement in cultural heritage settings.
+                    </p>
+                </div>
+                <div class="highlight-box">
+                    <h3 style="margin-bottom: 1rem; color: #333; font-size: 1.3rem;">Key Research Question</h3>
+                    <p style="font-size: 1.1rem; color: #555; font-style: italic;">
+                        "Does Pepper's Ghost technology provide educational and experiential advantages over traditional screen-based displays in museum environments?"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="research-setup">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Research Methodology</h2>
+            <div class="setup-grid">
+                <div class="setup-card fade-in">
+                    <div class="card-icon">👥</div>
+                    <h3 style="margin-bottom: 1rem;">Participants</h3>
+                    <p><strong>50 participants</strong> (ages 19-66) recruited from diverse academic backgrounds, excluding physics/engineering to avoid prior knowledge bias.</p>
+                </div>
+                <div class="setup-card fade-in">
+                    <div class="card-icon">🏛️</div>
+                    <h3 style="margin-bottom: 1rem;">Experimental Setup</h3>
+                    <p>Controlled museum environment featuring maritime artifacts with <strong>Pepper's Ghost vs. traditional screen</strong> comparison.</p>
+                </div>
+                <div class="setup-card fade-in">
+                    <div class="card-icon">📊</div>
+                    <h3 style="margin-bottom: 1rem;">Measurements</h3>
+                    <p>Knowledge acquisition tests, cognitive load assessment, object presence evaluation, and visitor experience questionnaires.</p>
+                </div>
+                <div class="setup-card fade-in">
+                    <div class="card-icon">🔬</div>
+                    <h3 style="margin-bottom: 1rem;">Design</h3>
+                    <p><strong>Between-subjects design</strong> with randomized assignment to ensure unbiased comparison between display methods.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="visual-separator"></div>
+
+    <section class="results-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">Key Findings</h2>
+            <p style="text-align: center; font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">
+                Comprehensive analysis across multiple dimensions of user experience and learning outcomes
+            </p>
+            <div class="results-grid">
+                <div class="result-card fade-in">
+                    <div class="result-number">No Sig.</div>
+                    <div class="result-label">Knowledge Retention</div>
+                    <p>Both display methods showed equally high information retention rates (Screen: 7.84/12, Hologram: 7.48/12)</p>
+                </div>
+                <div class="result-card fade-in">
+                    <div class="result-number">Equal</div>
+                    <div class="result-label">Cognitive Load</div>
+                    <p>No significant differences in extraneous, intrinsic, or germane cognitive load between conditions</p>
+                </div>
+                <div class="result-card fade-in">
+                    <div class="result-number">Similar</div>
+                    <div class="result-label">Object Presence</div>
+                    <p>Pepper's Ghost did not significantly enhance the perception of object presence (4.04 vs 3.84/7)</p>
+                </div>
+                <div class="result-card fade-in">
+                    <div class="result-number">Comparable</div>
+                    <div class="result-label">Visitor Experience</div>
+                    <p>High satisfaction scores across education, aesthetics, entertainment, and escapism dimensions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="implications-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Design Implications & Insights</h2>
+            <div class="implications-grid">
+                <div class="implication-card fade-in">
+                    <h3 style="margin-bottom: 1rem;">💡 Technology vs. Content</h3>
+                    <p>Visual novelty alone doesn't guarantee enhanced learning. Content quality and presentation structure remain primary factors in educational effectiveness.</p>
+                </div>
+                <div class="implication-card fade-in">
+                    <h3 style="margin-bottom: 1rem;">🎯 Interactivity Matters</h3>
+                    <p>Passive viewing experiences, even with advanced display technology, may not significantly enhance engagement compared to active, interactive elements.</p>
+                </div>
+                <div class="implication-card fade-in">
+                    <h3 style="margin-bottom: 1rem;">🌟 Environmental Factors</h3>
+                    <p>Lighting conditions critically impact holographic display effectiveness. Darker environments enhance the illusion and user immersion.</p>
+                </div>
+                <div class="implication-card fade-in">
+                    <h3 style="margin-bottom: 1rem;">📈 Cost-Benefit Analysis</h3>
+                    <p>Museums should carefully evaluate the cost-effectiveness of premium display technologies against traditional, well-designed alternatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills-showcase">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Skills Demonstrated</h2>
+            <div class="skills-grid">
+                <div class="skill-tag fade-in">User Research Design</div>
+                <div class="skill-tag fade-in">Statistical Analysis</div>
+                <div class="skill-tag fade-in">Experimental Psychology</div>
+                <div class="skill-tag fade-in">XR Technology Evaluation</div>
+                <div class="skill-tag fade-in">Human-Computer Interaction</div>
+                <div class="skill-tag fade-in">Museum Experience Design</div>
+                <div class="skill-tag fade-in">Cognitive Load Theory</div>
+                <div class="skill-tag fade-in">Data Visualization</div>
+                <div class="skill-tag fade-in">Academic Writing</div>
+                <div class="skill-tag fade-in">Questionnaire Design</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title">Interested in Learning More?</h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">
+                This research demonstrates my expertise in UX research, XR technology evaluation, and evidence-based design decisions. Let's discuss how these skills can benefit your next project.
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:ruiyu_wang@outlook.com" class="btn btn-primary">
+                    <span>Download Full Thesis</span>
+                    <span>📄</span>
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <span>View Other Projects</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
