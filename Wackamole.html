@@ -533,8 +533,12 @@
         <div class="container">
             <div class="video-container" style="margin:2rem 0;">
                 <video controls width="100%" style="border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.1);">
-                    <source src="./assets/wackamole.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
+                    <source src="assets/wackamole.mp4" type="video/mp4">
+                    <!-- 添加备用内容 -->
+                    <div class="video-fallback">
+                        <p>Your browser does not support the video tag.</p>
+                        <a href="assets/wackamole.mp4" download>Download the video</a>
+                    </div>
                 </video>
             </div>            
         </div>
