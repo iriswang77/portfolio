@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAVI Navigation App - Ruiyu Wang Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .hero-section {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .project-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .main-content {
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .content-block {
+            margin-bottom: 2rem;
+        }
+
+        .content-block h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .content-block p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Screenshot Gallery Styles */
+        .screenshot-gallery {
+            margin-bottom: 3rem;
+        }
+
+        .screenshot-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        .screenshot-item {
+            text-align: center;
+            max-width: 280px;
+        }
+
+        .screenshot-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+            color: #333;
+        }
+
+        .screenshot-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .phone-frame {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            border-radius: 25px;
+            padding: 20px 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: #555;
+            border-radius: 2px;
+        }
+
+        .screenshot-placeholder {
+            background: white;
+            border-radius: 20px;
+            aspect-ratio: 9/19.5;
+            width: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload-area {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .upload-area:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            transform: scale(0.98);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .image-preview.wide {
+            aspect-ratio: 16/9;
+            height: auto;
+            min-height: 200px;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .upload-area:hover .placeholder-content {
+            color: #333;
+        }
+
+        .placeholder-content span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-content p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .design-process-section {
+            background: white;
+            border: 2px dashed #dee2e6;
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .process-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-item {
+            text-align: center;
+        }
+
+        .process-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+            color: #333;
+        }
+
+        .process-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .process-frame {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .upload-status.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mockup-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mockup-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mockup-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mockup-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .mockup-content {
+            padding: 1.5rem;
+        }
+
+        .mockup-content h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .mockup-content p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .evaluation-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #667eea 10%, #764ba2 90%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewY(-2deg);
+        }
+
+        .result-card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .insight-section h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #28a745;
+        }
+
+        .insight-section.negative h4 {
+            color: #dc3545;
+        }
+
+        .insight-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insight-list li {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            font-size: 0.95rem;
+        }
+
+        .insight-list.negative li {
+            border-left-color: #dc3545;
+        }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            border-left: 5px solid #667eea;
+        }
+
+        .conclusion-box h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .conclusion-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .two-column,
+            .insights-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-tags {
+                justify-content: center;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1001;
+            transition: width 0.25s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Ruiyu Wang</a>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#evaluation">Evaluation</a></li>
+                <li><a href="#insights">Insights</a></li>
+                <li><a href="#" class="back-btn">← Back to Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="project-title">NAVI</h1>
+                <p class="project-subtitle">Autonomous Navigation for Foreign Cities</p>
+                <div class="project-tags">
+                    <span class="tag">UX Design</span>
+                    <span class="tag">User Research</span>
+                    <span class="tag">Mobile App</span>
+                    <span class="tag">Navigation</span>
+                    <span class="tag">Figma</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="section" id="overview">
+            <div class="container">
+                <h2 class="section-title">Project Overview</h2>
+                <div class="two-column">
+                    <div>
+                        <div class="content-block">
+                            <h3>The Challenge</h3>
+                            <p>Navigating a foreign city can be overwhelming and time-consuming. Traditional navigation apps don't consider personal preferences or travel purposes, leading to generic recommendations that may not match what users actually want to discover.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>The Solution</h3>
+                            <p>NAVI is a concept-based navigation app focused on user autonomy. It allows travelers to define their own exploration modes and priorities, making city navigation more efficient and personalized to their specific interests and goals.</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>My Role</h3>
+                            <p>As part of the T3G5 team, I contributed to concept development, user research, prototype design, and evaluation. I focused on the autonomy-centered design approach and user experience optimization.</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="content-block">
+                            <h3>Key Objectives</h3>
+                            <p>• Enable autonomous decision-making for travelers<br>
+                            • Provide customizable exploration modes<br>
+                            • Streamline route planning process<br>
+                            • Support diverse travel purposes (business, culture, entertainment)</p>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Technology Stack</h3>
+                            <div class="tech-stack">
+                                <span class="tech-item">Figma</span>
+                                <span class="tech-item">User Research</span>
+                                <span class="tech-item">Prototyping</span>
+                                <span class="tech-item">A/B Testing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="content-block">
+                            <h3>Timeline</h3>
+                            <p>6 weeks of intensive design and development, including concept ideation, prototype creation, user testing, and iterative refinement based on feedback.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="container">
+                <h2 class="section-title">Core Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>🎯 Custom Modes</h4>
+                        <p>Create personalized exploration modes with custom priorities and themes, or choose from default modes like Business, Culture, or Entertainment.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🗺️ Smart Map Integration</h4>
+                        <p>Simultaneously search for locations across different themes and comprehensively display relevant places on an interactive map.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📍 Easy Route Building</h4>
+                        <p>Quickly add interesting locations to your route with simple tap interactions and intelligent route optimization.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🔍 Contextual Discovery</h4>
+                        <p>Find places that match your specific travel goals, whether you're visiting for business meetings or seeking the best nightlife.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎨 Personalized Interface</h4>
+                        <p>Customize the app's appearance with different color themes to make the interface feel uniquely yours.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🚀 Autonomous Decision Making</h4>
+                        <p>Empowers users to make independent choices about their exploration without overwhelming them with options.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="mockups">
+            <div class="container">
+                <h2 class="section-title">Interface Design</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">
+                    High-fidelity prototypes showcasing the complete user experience flow
+                </p>
+
+                <!-- Main App Screenshots Section -->
+                <div class="screenshot-gallery">
+                    <div class="screenshot-container">
+                        <h3 style="text-align: center; margin-bottom: 2rem; color: #333;">Core App Screens</h3>
+                        <div class="screenshot-grid">
+                            <div class="screenshot-item">
+                                <div class="phone-frame">
+                                    <div class="screenshot-placeholder">
+                                        <div class="upload-area" onclick="document.getElementById('screenshot1').click()">
+                                            <input type="file" id="screenshot1" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'screen1')">
+                                            <div id="screen1" class="image-preview">
+                                                <div class="placeholder-content">
+                                                    <span style="font-size: 2rem;">📱</span>
+                                                    <p>Click to upload<br>Home Screen</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Main Navigation</h4>
+                                <p>Four core tabs with central custom modes access</p>
+                            </div>
+
+                            <div class="screenshot-item">
+                                <div class="phone-frame">
+                                    <div class="screenshot-placeholder">
+                                        <div class="upload-area" onclick="document.getElementById('screenshot2').click()">
+                                            <input type="file" id="screenshot2" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'screen2')">
+                                            <div id="screen2" class="image-preview">
+                                                <div class="placeholder-content">
+                                                    <span style="font-size: 2rem;">🗺️</span>
+                                                    <p>Click to upload<br>Map View</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Interactive Map</h4>
+                                <p>Location discovery with mode-based filtering</p>
+                            </div>
+
+                            <div class="screenshot-item">
+                                <div class="phone-frame">
+                                    <div class="screenshot-placeholder">
+                                        <div class="upload-area" onclick="document.getElementById('screenshot3').click()">
+                                            <input type="file" id="screenshot3" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'screen3')">
+                                            <div id="screen3" class="image-preview">
+                                                <div class="placeholder-content">
+                                                    <span style="font-size: 2rem;">🎯</span>
+                                                    <p>Click to upload<br>Custom Modes</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Custom Modes</h4>
+                                <p>Personalized exploration mode creation</p>
+                            </div>
+
+                            <div class="screenshot-item">
+                                <div class="phone-frame">
+                                    <div class="screenshot-placeholder">
+                                        <div class="upload-area" onclick="document.getElementById('screenshot4').click()">
+                                            <input type="file" id="screenshot4" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'screen4')">
+                                            <div id="screen4" class="image-preview">
+                                                <div class="placeholder-content">
+                                                    <span style="font-size: 2rem;">📍</span>
+                                                    <p>Click to upload<br>Route Planning</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Smart Route Planning</h4>
+                                <p>Drag-and-drop journey optimization</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Process Section -->
+                <div class="design-process-section" style="margin-top: 4rem;">
+                    <h3 style="text-align: center; margin-bottom: 2rem; color: #333;">Design Process & Wireframes</h3>
+                    <div class="process-gallery">
+                        <div class="process-item">
+                            <div class="process-frame">
+                                <div class="upload-area" onclick="document.getElementById('wireframe1').click()">
+                                    <input type="file" id="wireframe1" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'wire1')">
+                                    <div id="wire1" class="image-preview wide">
+                                        <div class="placeholder-content">
+                                            <span style="font-size: 2rem;">✏️</span>
+                                            <p>Click to upload<br>Wireframes or User Journey</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>User Flow & Wireframes</h4>
+                            <p>Early concept sketches and user journey mapping</p>
+                        </div>
+
+                        <div class="process-item">
+                            <div class="process-frame">
+                                <div class="upload-area" onclick="document.getElementById('prototype1').click()">
+                                    <input type="file" id="prototype1" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'proto1')">
+                                    <div id="proto1" class="image-preview wide">
+                                        <div class="placeholder-content">
+                                            <span style="font-size: 2rem;">🎨</span>
+                                            <p>Click to upload<br>Design System or Prototypes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Design System</h4>
+                            <p>Color palette, typography, and component library</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traditional Feature Cards -->
+                <div class="mockup-gallery" style="margin-top: 3rem;">
+                    <div class="mockup-card">
+                        <div class="mockup-header">
+                            <h4>🔍 Find & Filter</h4>
+                        </div>
+                        <div class="mockup-content">
+                            <h4>Category-Based Discovery</h4>
+                            <p>Switch between categories that correspond to mode priorities. Detailed location information with easy route addition via checkmark buttons.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mockup-card">
+                        <div class="mockup-header">
+                            <h4>👤 User Profile</h4>
+                        </div>
+                        <div class="mockup-content">
+                            <h4>Personal Customization</h4>
+                            <p>Account management with SSO options. Color theme customization with live preview. Personal preferences and app appearance control.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="evaluation">
+            <div class="container">
+                <h2 class="section-title">User Evaluation Results</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    Comprehensive user testing with 6 participants (4 male, 2 female), average age 22 years
+                </p>
+                
+                <div class="evaluation-results">
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <div class="result-number">5.2/7</div>
+                            <div class="result-label">First Impression Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <div class="result-number">4.6/7</div>
+                            <div class="result-label">Usability Rating</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <div class="result-number">✅</div>
+                            <div class="result-label">Autonomy Need Best Addressed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <div class="result-number">6.2/7</div>
+                            <div class="result-label">Visual Appeal & Intuition</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-block" style="margin-top: 3rem;">
+                    <h3>Psychological Needs Assessment</h3>
+                    <p>The app successfully addressed key user needs, with Stimulation (3.83/5) and Autonomy (3.42/5) scoring highest. Users unanimously agreed that autonomy was the best-addressed need, validating our core design concept.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="insights">
+            <div class="container">
+                <h2 class="section-title">Key Insights & Learnings</h2>
+                
+                <div class="insights-grid">
+                    <div class="insight-section">
+                        <h4>✅ What Worked Well</h4>
+                        <ul class="insight-list">
+                            <li>Strong visual design received consistently positive feedback</li>
+                            <li>Autonomy-focused concept successfully validated by all users</li>
+                            <li>Feature set felt complete - no missing functionality reported</li>
+                            <li>Intuitive navigation and aesthetic appeal scored highly</li>
+                            <li>Custom mode creation resonated with user needs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="insight-section negative">
+                        <h4>⚠️ Areas for Improvement</h4>
+                        <ul class="insight-list negative">
+                            <li>Initial usability could be improved with onboarding tutorial</li>
+                            <li>Settings split across two locations caused confusion</li>
+                            <li>Need for current location indicator on map</li>
+                            <li>Dark mode functionality requested by multiple users</li>
+                            <li>Some interface elements needed clearer affordances</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="conclusion-box">
+                    <h4>Design Impact & Next Steps</h4>
+                    <p>The evaluation confirmed our autonomy-centered approach while highlighting specific usability improvements. The app successfully balances feature richness with simplicity, achieving its goal of empowering user decision-making in foreign city navigation. Moving forward, we would implement an onboarding flow, consolidate settings, add location services, and introduce dark mode support.</p>
+                </div>
+
+                <div class="content-block" style="margin-top: 2rem;">
+                    <h3>Personal Reflection</h3>
+                    <p>This project strengthened my understanding of user-centered design principles and the importance of iterative testing. Working with psychological need frameworks like autonomy, competence, and relatedness provided valuable insights into designing for intrinsic motivation. The experience reinforced the value of balancing innovative concepts with practical usability considerations.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate cards on scroll
+        document.querySelectorAll('.feature-card, .mockup-card, .result-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Image upload functionality
+        function handleImageUpload(event, targetId) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const targetDiv = document.getElementById(targetId);
+                    targetDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="App Screenshot">
+                        <div class="upload-status show">✓ Uploaded</div>
+                    `;
+                    
+                    // Hide success message after 2 seconds
+                    setTimeout(() => {
+                        const status = targetDiv.querySelector('.upload-status');
+                        if (status) {
+                            status.classList.remove('show');
+                        }
+                    }, 2000);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a valid image file.');
+            }
+        }
+    </script>
+</body>
+</html>

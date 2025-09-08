@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruiyu Wang - Portfolio 2024</title>
+    <style>
+        /* 打印布局优化 */
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        :root {
+            --brand-1: #667eea;
+            --brand-2: #764ba2;
+            --text: #333;
+            --muted: #666;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 页面布局 */
+        .page {
+            height: 297mm;
+            padding: 0;
+            page-break-after: always;
+            position: relative;
+        }
+
+        /* 封面样式 */
+        .cover {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+            color: white;
+            padding: 2cm;
+        }
+
+        .cover h1 {
+            font-size: 48pt;
+            margin-bottom: 1cm;
+        }
+
+        .cover h2 {
+            font-size: 24pt;
+            font-weight: normal;
+            margin-bottom: 2cm;
+        }
+
+        /* 项目页样式 */
+        .project {
+            padding: 1cm 0;
+        }
+
+        .project-header {
+            margin-bottom: 1cm;
+        }
+
+        .project-title {
+            font-size: 24pt;
+            color: var(--brand-1);
+            margin-bottom: 0.5cm;
+        }
+
+        .project-subtitle {
+            font-size: 14pt;
+            color: var(--muted);
+        }
+
+        /* 两列布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1cm;
+            margin-bottom: 1cm;
+        }
+
+        /* 图片容器 */
+        .image-container {
+            page-break-inside: avoid;
+            margin-bottom: 1cm;
+        }
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4mm;
+        }
+
+        /* 技术栈标签 */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5mm;
+            margin: 5mm 0;
+        }
+
+        .tech-tag {
+            background: #f0f0f0;
+            padding: 2mm 4mm;
+            border-radius: 2mm;
+            font-size: 9pt;
+        }
+
+        /* 联系方式 */
+        .contact {
+            text-align: center;
+            margin-top: 2cm;
+        }
+
+        /* 目录样式 */
+        .toc {
+            padding: 2cm 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5mm;
+            border-bottom: 1px dotted var(--muted);
+        }
+
+        /* 确保分页控制 */
+        .no-break {
+            page-break-inside: avoid;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <div class="page cover">
+        <h1>Ruiyu Wang</h1>
+        <h2>Interactive Designer & XR Developer</h2>
+        <p>Portfolio 2024</p>
+    </div>
+
+    <!-- 目录 -->
+    <div class="page toc">
+        <h2>Contents</h2>
+        <div class="toc-item">
+            <span>NAVI Navigation App</span>
+            <span>3</span>
+        </div>
+        <div class="toc-item">
+            <span>3D Hologram Museum Research</span>
+            <span>6</span>
+        </div>
+        <div class="toc-item">
+            <span>Wackamole VR</span>
+            <span>9</span>
+        </div>
+        <div class="toc-item">
+            <span>DisTwi Energy Platform</span>
+            <span>12</span>
+        </div>
+        <div class="toc-item">
+            <span>Yabusame VR</span>
+            <span>15</span>
+        </div>
+    </div>
+
+    <!-- NAVI项目 -->
+    <div class="page project no-break">
+        <div class="project-header">
+            <h2 class="project-title">NAVI Navigation App</h2>
+            <p class="project-subtitle">Autonomous Navigation for Foreign Cities</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">UX Design</span>
+                <span class="tech-tag">User Research</span>
+                <span class="tech-tag">Mobile App</span>
+                <span class="tech-tag">Figma</span>
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div>
+                <h3>Challenge & Solution</h3>
+                <p>Developed an autonomous navigation app that helps foreign travelers explore new cities based on personal interests and goals. Features cultural mapping and customized route planning.</p>
+            </div>
+            <div>
+                <h3>Key Contributions</h3>
+                <ul>
+                    <li>Led UX research and design</li>
+                    <li>Conducted user testing</li>
+                    <li>Created interactive prototypes</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="Ruiyu Wang 1 Openpage.png" alt="NAVI App Interface" class="project-image">
+        </div>
+    </div>
+
+    <!-- Hologram项目 -->
+    <div class="page project page-break">
+        <div class="project-header">
+            <h2 class="project-title">3D Hologram Museum Research</h2>
+            <p class="project-subtitle">Investigation of Pepper's Ghost Technology for Museum Exhibitions</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Research</span>
+                <span class="tech-tag">User Studies</span>
+                <span class="tech-tag">3D Visualization</span>
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div>
+                <h3>Research Focus</h3>
+                <p>Investigated the effectiveness of holographic displays in museum settings, comparing learning outcomes with traditional display methods.</p>
+            </div>
+            <div>
+                <h3>Key Findings</h3>
+                <p>Demonstrated comparable learning effectiveness between holographic and traditional displays, with enhanced user engagement in interactive scenarios.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wackamole VR项目 -->
+    <div class="page project page-break">
+        <div class="project-header">
+            <h2 class="project-title">Wackamole VR</h2>
+            <p class="project-subtitle">Multiplayer VR Game with Innovative Interaction Design</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Unity 3D</span>
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">VR Development</span>
+                <span class="tech-tag">Multiplayer</span>
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div>
+                <h3>Development Highlights</h3>
+                <p>Created a multiplayer VR game featuring advanced hand tracking and haptic feedback systems.</p>
+            </div>
+            <div>
+                <h3>Technical Achievement</h3>
+                <ul>
+                    <li>Implemented real-time networking</li>
+                    <li>Optimized VR performance</li>
+                    <li>Designed intuitive controls</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DisTwi项目 -->
+    <div class="page project page-break">
+        <div class="project-header">
+            <h2 class="project-title">DisTwi Energy Platform</h2>
+            <p class="project-subtitle">Digital Twin Platform for Energy Management</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Digital Twin</span>
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div>
+                <h3>Platform Overview</h3>
+                <p>Developed a web-based digital twin platform for visualizing and managing energy systems.</p>
+            </div>
+            <div>
+                <h3>Technical Features</h3>
+                <ul>
+                    <li>Real-time data visualization</li>
+                    <li>Interactive controls</li>
+                    <li>Predictive analytics</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yabusame VR项目 -->
+    <div class="page project page-break">
+        <div class="project-header">
+            <h2 class="project-title">Yabusame VR</h2>
+            <p class="project-subtitle">Immersive Cultural Heritage Experience</p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">VR Development</span>
+                <span class="tech-tag">Cultural Heritage</span>
+                <span class="tech-tag">Unity 3D</span>
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div>
+                <h3>Project Description</h3>
+                <p>Created an educational VR experience showcasing traditional Japanese mounted archery.</p>
+            </div>
+            <div>
+                <h3>Implementation</h3>
+                <ul>
+                    <li>Authentic movement mechanics</li>
+                    <li>Historical accuracy</li>
+                    <li>Educational content integration</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系方式 -->
+    <div class="page contact page-break">
+        <h2>Contact Information</h2>
+        <div style="margin: 2cm 0;">
+            <p style="font-size: 14pt; margin: 1cm 0;">
+                <strong>Email:</strong> ruiyu_wang@outlook.com
+            </p>
+            <p style="font-size: 14pt; margin: 1cm 0;">
+                <strong>Phone:</strong> +49 152 25263085
+            </p>
+            <p style="font-size: 14pt; margin: 1cm 0;">
+                <strong>LinkedIn:</strong> linkedin.com/in/ruiyu-wang-578622264
+            </p>
+            <p style="font-size: 14pt; margin: 1cm 0;">
+                <strong>Location:</strong> Weimar, Germany
+            </p>
+        </div>
+        <p style="font-style: italic; color: var(--muted);">
+            Portfolio 2024 - Interactive Designer & XR Developer
+        </p>
+    </div>
+</body>
+</html>

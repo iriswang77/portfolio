@@ -1,0 +1,9 @@
+:root {
+    --brand-1: #667eea;
+    --brand-2: #764ba2;
+    --text: #333;
+    --muted: #666;
+    --bg-grad: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+    --white: #fff;
+    --bg-light: #f8f9fa;
+}

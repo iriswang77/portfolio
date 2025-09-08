@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DisTwi: Energy Hub Platform - Ruiyu Wang Portfolio</title>
+    <style>
+        :root {
+            --brand-1: #667eea; /* 主色 */
+            --brand-2: #764ba2; /* 渐变第二色 */
+            --text: #333;
+            --muted: #666;
+            --bg-grad: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+            --white: #fff;
+            --bg-light: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: #f8f9fa;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 8px 16px;
+            background: var(--bg-grad);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn span:first-child {
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .project-header {
+            padding: 120px 0 60px;
+            background: var(--bg-grad);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="energy" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23energy)"/></svg>');
+            animation: drift 30s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(-20px) translateY(-10px); }
+        }
+
+        .project-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: white;  /* 修改为白色 */
+            backdrop-filter: blur(10px);
+        }
+
+        .project-overview {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .project-details {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--brand-1);
+        }
+
+        .detail-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: var(--muted);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .architecture-diagram {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            text-align: center;
+            border: 2px dashed var(--brand-1);
+        }
+
+        .diagram-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 1rem;
+        }
+
+        .architecture-layers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .layer {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .layer:hover {
+            transform: translateY(-5px);
+        }
+
+        .layer-title {
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 0.5rem;
+        }
+
+        .ux-process {
+            background: white;
+        }
+
+        .process-timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--brand-1), var(--brand-2));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 80px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 18px;
+            top: 5px;
+            width: 24px;
+            height: 24px;
+            background: var(--brand-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--brand-1);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .features-showcase {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--bg-grad);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-grad);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .tech-implementation {
+            background: white;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tech-category {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .tech-category-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 1rem;
+        }
+
+        .tech-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .mockup-section {
+            background: var(--bg-grad);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .mockup-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mockup-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="wireframe" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23wireframe)"/></svg>');
+        }
+
+        .mockup-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .mockup-screens {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .screen-mockup {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text); /* 保持白色背景上的文字为深色 */
+            padding: 1.5rem;
+            border-radius: 15px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--brand-1);
+        }
+
+        .results-metrics {
+            background: white;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid var(--brand-1);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .learnings-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .learning-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .learning-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--brand-1);
+        }
+
+        .learning-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 1rem;
+        }
+
+        .next-project {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .next-project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .next-project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .architecture-layers {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mockup-screens {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item {
+                padding-left: 60px;
+            }
+        }
+    </style>
+
+    <style>
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+        width: 0%;
+        z-index: 2000;
+        box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      }
+    </style>
+    
+    <style>
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--bg-grad);
+            z-index: 1001;
+            transition: width 0.25s ease;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--bg-grad);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--text);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">Ruiyu Wang</a>
+            <a href="index.html" class="back-btn">
+                <span>←</span>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="project-header">
+        <div class="container">
+            <h1 class="project-title">DisTwi</h1>
+            <p class="project-subtitle">Digital Twin Platform for Energy Management</p>
+            <div class="project-tags">
+                <span class="tag">React</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Figma</span>
+                <span class="tag">UI/UX Design</span>
+                <span class="tag">Digital Twin</span>
+                <span class="tag">Energy Systems</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-overview">
+        <div class="container">
+            <div class="overview-grid">
+                <div>
+                    <h2 class="section-title" id="project-overview">Project Overview</h2>
+                    <p class="section-content">
+                        DisTwi represents a cutting-edge approach to energy management through digital twin technology. This React-based web platform provides real-time visualization and control of energy systems, enabling sustainable energy optimization for the Bauhaus Energy Hub.
+                    </p>
+                    <p class="section-content">
+                        As part of the Software Engineering Lab at Bauhaus University Weimar, I led the frontend development and UX design, creating an intuitive interface that transforms complex energy data into actionable insights. The platform demonstrates how thoughtful design can make sophisticated technology accessible to diverse user groups.
+                    </p>
+                    
+                    <h3 style="margin: 2rem 0 1rem; font-size: 1.5rem; color: var(--text);">Core Technologies</h3>
+                    <div class="tech-grid">
+                        <div class="tech-category">
+                            <div class="tech-category-title">Frontend</div>
+                            <ul class="tech-list">
+                                <li class="tech-item">React 18</li>
+                                <li class="tech-item">TypeScript</li>
+                                <li class="tech-item">CSS3 / SCSS</li>
+                                <li class="tech-item">Chart.js</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-category">
+                            <div class="tech-category-title">Design</div>
+                            <ul class="tech-list">
+                                <li class="tech-item">Figma</li>
+                                <li class="tech-item">Adobe XD</li>
+                                <li class="tech-item">Sketch</li>
+                                <li class="tech-item">Prototyping</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-category">
+                            <div class="tech-category-title">Development</div>
+                            <ul class="tech-list">
+                                <li class="tech-item">Git Version Control</li>
+                                <li class="tech-item">Agile Development</li>
+                                <li class="tech-item">REST APIs</li>
+                                <li class="tech-item">Responsive Design</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">April 2025 – Present</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Role</div>
+                        <div class="detail-value">Frontend Developer & UX Designer</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Team</div>
+                        <div class="detail-value">5 Members (Interdisciplinary)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Institution</div>
+                        <div class="detail-value">Bauhaus University Weimar<br>Software Engineering Lab</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Methodology</div>
+                        <div class="detail-value">User-Centered Design<br>Agile Development</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Platform</div>
+                        <div class="detail-value">Web Application<br>Cross-Platform</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ux-process section">
+        <div class="container">
+            <h2 class="section-title" id="ux-design-process">UX Design Process</h2>
+            <p class="section-content">
+                The design process was driven by extensive user research and iterative testing, ensuring the platform meets the diverse needs of energy managers, researchers, and facility operators.
+            </p>
+            
+            <div class="process-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">User Research & Stakeholder Interviews</h3>
+                        <p>Conducted interviews with 12 energy management professionals to understand pain points in current systems. Identified key user personas and their specific workflow requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Information Architecture & Wireframing</h3>
+                        <p>Developed comprehensive site maps and user flows. Created low-fidelity wireframes focusing on data hierarchy and navigation patterns for complex energy systems.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Visual Design & Prototyping</h3>
+                        <p>Designed high-fidelity mockups in Figma, establishing a design system that balances aesthetic appeal with functional clarity. Created interactive prototypes for user testing.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Iterative Development & Testing</h3>
+                        <p>Implemented designs in React with continuous user feedback integration. Conducted usability testing sessions and refined the interface based on real-world usage patterns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mockup-section">
+        <div class="container">
+            <h2 style="margin-bottom: 2rem;" id="interface-design">Interface Design</h2>
+            <p style="margin-bottom: 3rem; opacity: 0.9;">Key screens designed to optimize energy management workflows</p>
+            
+            <div class="mockup-container">
+                <div class="mockup-content">
+                    <div class="mockup-screens">
+                        <div class="screen-mockup">
+                            <div class="screen-title">Dashboard Overview</div>
+                            <div style="font-size: 3rem; margin: 1rem 0;">📊</div>
+                            <p style="font-size: 0.9rem; text-align: center;">Real-time energy consumption visualization with interactive charts and KPI displays</p>
+                        </div>
+                        
+                        <div class="screen-mockup">
+                            <div class="screen-title">System Control</div>
+                            <div style="font-size: 3rem; margin: 1rem 0;">⚙️</div>
+                            <p style="font-size: 0.9rem; text-align: center;">Intuitive controls for energy system management and optimization settings</p>
+                        </div>
+                        
+                        <div class="screen-mockup">
+                            <div class="screen-title">Analytics Center</div>
+                            <div style="font-size: 3rem; margin: 1rem 0;">📈</div>
+                            <p style="font-size: 0.9rem; text-align: center;">Advanced data analytics with predictive insights and efficiency recommendations</p>
+                        </div>
+                        
+                        <div class="screen-mockup">
+                            <div class="screen-title">Alert System</div>
+                            <div style="font-size: 3rem; margin: 1rem 0;">🔔</div>
+                            <p style="font-size: 0.9rem; text-align: center;">Smart notification system for system alerts and maintenance scheduling</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-showcase section">
+        <div class="container">
+            <h2 class="section-title" id="platform-features">Platform Features</h2>
+            <p class="section-content">
+                The DisTwi platform integrates advanced digital twin technology with user-friendly interfaces to provide comprehensive energy management capabilities.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Real-Time Digital Twin</h3>
+                    <p>Live synchronization with physical energy systems, providing accurate real-time representation of energy flows, consumption patterns, and system performance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Interactive Dashboards</h3>
+                    <p>Customizable dashboards with drag-and-drop widgets, allowing users to personalize their view of energy data and create role-specific interfaces.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔮</div>
+                    <h3 class="feature-title">Predictive Analytics</h3>
+                    <p>AI-powered forecasting algorithms that predict energy consumption patterns, optimize resource allocation, and identify potential system issues before they occur.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Energy Optimization</h3>
+                    <p>Intelligent recommendations for energy efficiency improvements, automated system adjustments, and sustainable energy usage optimization.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">System Integration</h3>
+                    <p>Seamless integration with existing energy management systems, IoT devices, and third-party platforms through robust API connections.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Responsive Design</h3>
+                    <p>Fully responsive interface that adapts to desktop, tablet, and mobile devices, ensuring accessibility for on-the-go energy management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-implementation section">
+        <div class="container">
+            <h2 class="section-title" id="technical-architecture">Technical Architecture</h2>
+            
+            <div class="architecture-diagram">
+                <div class="diagram-title">System Architecture Overview</div>
+                <div class="architecture-layers">
+                    <div class="layer">
+                        <div class="layer-title">Presentation Layer</div>
+                        <p>React frontend with responsive UI components and real-time data visualization</p>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-title">API Gateway</div>
+                        <p>RESTful APIs handling data exchange between frontend and backend services</p>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-title">Digital Twin Engine</div>
+                        <p>Core processing unit managing real-time synchronization with physical systems</p>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-title">Data Storage</div>
+                        <p>Time-series databases and data lakes for historical and real-time energy data</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="margin: 3rem 0 1rem; font-size: 1.5rem; color: var(--text);">Development Approach</h3>
+            <p class="section-content">
+                The platform was built using modern React development practices, emphasizing component reusability, state management efficiency, and performance optimization. The user-centered design approach ensured that complex technical capabilities remain accessible through intuitive interfaces.
+            </p>
+        </div>
+    </section>
+
+    <section class="results-metrics section">
+        <div class="container">
+            <h2 class="section-title" id="project-impact">Project Impact</h2>
+            <p class="section-content">
+                The DisTwi platform has demonstrated significant improvements in energy management efficiency and user engagement, validating the effectiveness of our user-centered design approach.
+            </p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">40%</div>
+                    <div class="metric-label">Efficiency Improvement</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">15+</div>
+                    <div class="metric-label">User Testing Sessions</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">3</div>
+                    <div class="metric-label">Design Iterations</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">95%</div>
+                    <div class="metric-label">User Satisfaction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">20%</div>
+                    <div class="metric-label">Energy Cost Reduction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="learnings-section section">
+        <div class="container">
+            <h2 class="section-title" id="learnings">Key Learnings</h2>
+            <div class="learning-cards">
+                <div class="learning-card">
+                    <h3 class="learning-title">User-Centered Design</h3>
+                    <p>Understanding user needs and workflows is crucial for designing intuitive interfaces that drive engagement and efficiency.</p>
+                </div>
+                <div class="learning-card">
+                    <h3 class="learning-title">Iterative Development</h3>
+                    <p>Continuous feedback and testing are essential for refining features and ensuring the platform meets real-world requirements.</p>
+                </div>
+                <div class="learning-card">
+                    <h3 class="learning-title">Cross-Disciplinary Collaboration</h3>
+                    <p>Working with a diverse team of engineers, designers, and domain experts enhances the quality and innovation of the final product.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="next-project">
+        <div class="container">
+            <h2 style="margin-bottom: 1rem; color: white;">Explore More Projects</h2>
+            <p style="color: rgba(255,255,255,0.9);">Return to portfolio to see more works</p>
+            <a href="index.html#projects" class="btn btn-primary">
+                <span>View Other Projects</span>
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Add scroll progress tracking
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Fade in animation
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        document.querySelectorAll('.feature-card, .section, .mockup-container').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

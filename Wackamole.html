@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wackamole VR - Ruiyu Wang Portfolio</title>
+    <style>
+        :root {
+            --brand-1: #667eea; /* 主色 */
+            --brand-2: #764ba2; /* 渐变第二色 */
+            --text: #333;
+            --muted: #666;
+            --bg-grad: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: #f8f9fa;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--bg-grad);
+            z-index: 1001;
+            transition: width 0.25s ease;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 8px 16px;
+            background: var(--bg-grad);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn span:first-child {
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .project-header {
+            padding: 120px 0 60px;
+            background: var(--bg-grad);
+            color: white;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-overview {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .project-details {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--brand-1);
+        }
+
+        .detail-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: var(--muted);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .process-step {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--bg-grad);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: var(--text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--brand-1);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-grad);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .challenges-solutions {
+            background: white;
+        }
+
+        .challenge-item {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .solution-item {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #27ae60;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .result-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--brand-1);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: var(--bg-grad);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .video-placeholder {
+            background: var(--bg-grad);
+            height: 400px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .video-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .next-project {
+            background: var(--bg-grad);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .next-project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .next-project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">Ruiyu Wang</a>
+            <a href="index.html" class="back-btn">
+                <span>←</span>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="project-header">
+        <div class="container">
+            <h1 class="project-title">Wackamole VR</h1>
+            <p class="project-subtitle">Multiplayer VR Game with Innovative Interaction Design</p>
+            <div class="project-tags">
+                <span class="tag">Unity 3D</span>
+                <span class="tag">C# Programming</span>
+                <span class="tag">VR Development</span>
+                <span class="tag">Multiplayer</span>
+                <span class="tag">Interaction Design</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-overview">
+        <div class="container">
+            <div class="overview-grid">
+                <div>
+                    <h2 class="section-title">Project Overview</h2>
+                    <p class="section-content">
+                        Wackamole VR reimagines the classic arcade game for virtual reality, creating an immersive multiplayer experience that combines physical interaction with digital gameplay. This project demonstrates my expertise in VR development, game design, and user interaction research.
+                    </p>
+                    <p class="section-content">
+                        Working within the VR & Visualization Lab at Bauhaus University Weimar, I developed a comprehensive VR solution that addresses key challenges in virtual interaction design while creating an engaging gaming experience.
+                    </p>
+                    
+                    <h3 style="margin: 2rem 0 1rem; font-size: 1.5rem; color: var(--text);">Technology Stack</h3>
+                    <div class="tech-stack">
+                        <span class="tech-item">Unity 3D</span>
+                        <span class="tech-item">C#</span>
+                        <span class="tech-item">VR SDK</span>
+                        <span class="tech-item">Photon Networking</span>
+                        <span class="tech-item">3D Audio</span>
+                        <span class="tech-item">Haptic Feedback</span>
+                    </div>
+                </div>
+                
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">October 2024 – March 2025</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Role</div>
+                        <div class="detail-value">VR Developer & Interaction Designer</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Team</div>
+                        <div class="detail-value">2 Members</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Institution</div>
+                        <div class="detail-value">Bauhaus University Weimar<br>VR & Visualization Lab</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Platform</div>
+                        <div class="detail-value">Oculus Rift, HTC Vive</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="video-container" style="margin:2rem 0;">
+                <video controls width="100%" style="border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.1);">
+                    <source src="video/wackamole.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>            
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Design Process</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Research & Analysis</h3>
+                    <p>Studied existing VR games and analyzed user interaction patterns in virtual environments. Conducted literature review on spatial computing and haptic feedback.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Concept Development</h3>
+                    <p>Designed game mechanics that leverage VR's unique capabilities. Created wireframes and interaction flows for multiplayer scenarios.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Prototyping</h3>
+                    <p>Built initial VR prototype with basic interaction systems. Implemented hand tracking and collision detection for mole-whacking mechanics.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">User Testing</h3>
+                    <p>Conducted iterative testing sessions with 20+ users. Gathered feedback on comfort, engagement, and interaction intuitiveness.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Iteration & Polish</h3>
+                    <p>Refined game mechanics based on user feedback. Optimized performance and added multiplayer networking capabilities.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Final Implementation</h3>
+                    <p>Delivered complete VR game with polished interactions, sound design, and comprehensive multiplayer functionality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">👥</div>
+                    <h3>Multiplayer Support</h3>
+                    <p>Real-time multiplayer gameplay for up to 4 players with synchronized game states and competitive scoring.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Precise Hand Tracking</h3>
+                    <p>Advanced hand tracking system with haptic feedback for accurate and satisfying mole-whacking interactions.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔊</div>
+                    <h3>Spatial Audio</h3>
+                    <p>3D positional audio system that enhances immersion and provides gameplay cues through sound design.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Dynamic Difficulty</h3>
+                    <p>Adaptive difficulty system that adjusts mole speed and spawn patterns based on player performance.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Immersive Environment</h3>
+                    <p>Carefully designed virtual environments with optimized lighting and visual effects for VR comfort.</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <h3>Performance Analytics</h3>
+                    <p>Built-in analytics system to track player behavior and game performance for continuous improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="challenges-solutions section">
+        <div class="container">
+            <h2 class="section-title">Challenges & Solutions</h2>
+            
+            <div class="challenge-item">
+                <h3 style="color: #e74c3c; margin-bottom: 1rem;">Challenge: VR Motion Sickness</h3>
+                <p>Initial testing revealed that rapid movements and unpredictable camera changes caused discomfort for some users.</p>
+            </div>
+            
+            <div class="solution-item">
+                <h3 style="color: #27ae60; margin-bottom: 1rem;">Solution: Comfort-First Design</h3>
+                <p>Implemented smooth locomotion options, reduced unnecessary camera movements, and added comfort settings. Conducted extensive testing to optimize frame rates and reduce latency.</p>
+            </div>
+            
+            <div class="challenge-item">
+                <h3 style="color: #e74c3c; margin-bottom: 1rem;">Challenge: Network Synchronization</h3>
+                <p>Maintaining real-time synchronization across multiple VR headsets proved technically challenging, especially with fast-paced gameplay.</p>
+            </div>
+            
+            <div class="solution-item">
+                <h3 style="color: #27ae60; margin-bottom: 1rem;">Solution: Optimized Networking</h3>
+                <p>Developed a custom networking solution using Photon, implemented predictive algorithms, and optimized data transmission to ensure smooth multiplayer experience.</p>
+            </div>
+            
+            <div class="challenge-item">
+                <h3 style="color: #e74c3c; margin-bottom: 1rem;">Challenge: Interaction Precision</h3>
+                <p>Achieving satisfying and precise hand interactions in VR required fine-tuning of collision detection and haptic feedback systems.</p>
+            </div>
+            
+            <div class="solution-item">
+                <h3 style="color: #27ae60; margin-bottom: 1rem;">Solution: Advanced Hand Tracking</h3>
+                <p>Implemented sophisticated collision detection algorithms, calibrated haptic feedback intensity, and created visual feedback systems to enhance interaction accuracy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section section">
+        <div class="container">
+            <h2 class="section-title">Results & Impact</h2>
+            <p class="section-content">
+                The Wackamole VR project successfully demonstrated the potential of immersive multiplayer gaming while advancing VR interaction design principles. Through comprehensive user testing and iterative development, we achieved significant improvements in user engagement and comfort.
+            </p>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number">95%</div>
+                    <div class="result-label">User Satisfaction</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">30+</div>
+                    <div class="result-label">Test Participants</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">60fps</div>
+                    <div class="result-label">Stable Performance</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">4</div>
+                    <div class="result-label">Simultaneous Players</div>
+                </div>
+            </div>
+            
+            <h3 style="margin: 3rem 0 1rem; font-size: 1.5rem; color: var(--text);">Key Learnings</h3>
+            <p class="section-content">
+                This project reinforced the importance of user-centered design in VR development. I learned that technical excellence must be balanced with user comfort and accessibility. The iterative testing process revealed insights about spatial interaction design that informed my approach to subsequent VR projects.
+            </p>
+        </div>
+    </section>
+
+    <section class="next-project">
+        <div class="container">
+            <h2 style="margin-bottom: 1rem; color: white;">Return to Portfolio</h2>
+            <a href="index.html" class="next-project-btn">View All Projects</a>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.process-step, .feature-card, .result-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Scroll progress bar
+        const progressBar = document.querySelector('.scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = `${scrollPercent}%`;
+        });
+    </script>
+</body>
+</html>

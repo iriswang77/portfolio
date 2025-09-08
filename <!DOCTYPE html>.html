@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruiyu Wang - Portfolio 2024</title>
+    <style>
+        /* 打印布局优化 */
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        :root {
+            --brand-1: #667eea;
+            --brand-2: #764ba2;
+            --text: #333;
+            --muted: #666;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 页面布局 */
+        .page {
+            height: 297mm;
+            padding: 0;
+            page-break-after: always;
+            position: relative;
+        }
+
+        /* 封面样式 */
+        .cover {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+            color: white;
+            padding: 2cm;
+        }
+
+        .cover h1 {
+            font-size: 48pt;
+            margin-bottom: 1cm;
+        }
+
+        .cover h2 {
+            font-size: 24pt;
+            font-weight: normal;
+            margin-bottom: 2cm;
+        }
+
+        /* 项目页样式 */
+        .project {
+            padding: 1cm 0;
+        }
+
+        .project-header {
+            margin-bottom: 1cm;
+        }
+
+        .project-title {
+            font-size: 24pt;
+            color: var(--brand-1);
+            margin-bottom: 0.5cm;
+        }
+
+        .project-subtitle {
+            font-size: 14pt;
+            color: var(--muted);
+        }
+
+        /* 两列布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1cm;
+            margin-bottom: 1cm;
+        }
+
+        /* 图片容器 */
+        .image-container {
+            page-break-inside: avoid;
+            margin-bottom: 1cm;
+        }
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4mm;
+        }
+
+        /* 技术栈标签 */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5mm;
+            margin: 5mm 0;
+        }
+
+        .tech-tag {
+            background: #f0f0f0;
+            padding: 2mm 4mm;
+            border-radius: 2mm;
+            font-size: 9pt;
+        }
+
+        /* 联系方式 */
+        .contact {
+            text-align: center;
+            margin-top: 2cm;
+        }
+
+        /* 目录样式 */
+        .toc {
+            padding: 2cm 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5mm;
+            border-bottom: 1px dotted var(--muted);
+        }
+
+        /* 确保分页控制 */
+        .no-break {
+            page-break-inside: avoid;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <div class="page cover">
+        <h1>Ruiyu Wang</h1>
+        <h2>Interactive Designer & XR Developer</h2>
+        <p>Portfolio 2024</p>
+    </div>
+
+    <!-- 目录 -->
+    <div class="page toc">
+        <h2>Contents</h2>
+        <div class="toc-item">
+            <span>NAVI Navigation App</span>
+            <span>3</span>
+        </div>
+        <!-- ...其他目录项... -->
+    </div>
+
+    <!-- NAVI项目 -->
+    <div class="page project">
+        <div class="project-header">
+            <h2 class="project-title">NAVI Navigation App</h2>
+            <p class="project-subtitle">Autonomous Navigation for Foreign Cities</p>
+        </div>
+        <!-- ...项目内容... -->
+    </div>
+
+    <!-- ...其他项目页面... -->
+
+    <!-- 联系方式 -->
+    <div class="page contact">
+        <h2>Get in Touch</h2>
+        <p>ruiyu_wang@outlook.com</p>
+        <p>+49 152 25263085</p>
+        <p>linkedin.com/in/ruiyu-wang-578622264</p>
+    </div>
+</body>
+</html>
