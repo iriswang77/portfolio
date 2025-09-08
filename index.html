@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruiyu Wang - Interactive Designer & XR Developer</title>
     <style>
+        :root {
+            --brand-1: #667eea; /* 主色 */
+            --brand-2: #764ba2; /* 渐变第二色 */
+            --text: #333;      /* 主文本色 */
+            --muted: #666;     /* 次要文本色 */
+            --bg-grad: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
+            --white: #fff;     /* 白色 */
+            --bg-light: #f8f9fa; /* 浅色背景 */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,8 +24,8 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text);
+            background: var(--bg-grad);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -49,7 +59,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #333;
+            color: var(--text);
         }
 
         .nav-links {
@@ -60,14 +70,14 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text);
             font-weight: 500;
             transition: color 0.3s ease;
             position: relative;
         }
 
         .nav-links a:hover {
-            color: #667eea;
+            color: var(--brand-1);
         }
 
         .nav-links a::after {
@@ -77,7 +87,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #667eea;
+            background: var(--brand-1);
             transition: width 0.3s ease;
         }
 
@@ -124,6 +134,7 @@
             margin-bottom: 1rem;
             opacity: 0;
             animation: slideUp 1s ease 0.5s forwards;
+            color: white;
         }
 
         .hero-subtitle {
@@ -177,8 +188,8 @@
         }
 
         .btn-primary {
-            background: white;
-            color: #333;
+            background: var(--white);
+            color: var(--text);
         }
 
         .btn-primary:hover {
@@ -188,13 +199,13 @@
 
         .btn-secondary {
             background: transparent;
-            color: white;
-            border: 2px solid white;
+            color: var(--white);
+            border: 2px solid var(--white);
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: #333;
+            background: var(--white);
+            color: var(--text);
             transform: translateY(-2px);
         }
 
@@ -212,7 +223,7 @@
         }
 
         .skill-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #c3cfe2 100%);
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
@@ -228,14 +239,14 @@
         .skill-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-grad);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
             font-size: 1.5rem;
-            color: white;
+            color: var(--white);
         }
 
         .section-title {
@@ -243,19 +254,19 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #333;
+            color: var(--text);
         }
 
         .section-subtitle {
             text-align: center;
             font-size: 1.1rem;
-            color: #666;
+            color: var(--muted);
             max-width: 600px;
             margin: 0 auto;
         }
 
         .contact-info {
-            background: #f8f9fa;
+            background: var(--bg-light);
             padding: 3rem 0;
             text-align: center;
         }
@@ -272,14 +283,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #333;
+            color: var(--text);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .contact-link:hover {
-            color: #667eea;
+            color: var(--brand-1);
         }
 
         .floating-elements {
@@ -356,11 +367,108 @@
                 transform: translateX(-50%) translateY(-5px);
             }
         }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--bg-grad);
+            z-index: 1001;
+            transition: width 0.25s ease;
+        }
+
         /* ensure anchors scroll nicely below fixed navbar */
         section { scroll-margin-top: 90px; }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: white;  /* 添加白色文本 */
+            backdrop-filter: blur(10px);
+        }
+
+        .project-header, .hero-section, .next-project, .mockup-section {
+            color: white; /* 确保所有深色背景区域的文字为白色 */
+        }
+
+        .project-subtitle, .hero-subtitle {
+            color: rgba(255, 255, 255, 0.9); /* 略微降低不重要文本的透明度 */
+        }
+
+        .result-card {
+            color: white; /* 结果卡片使用白色文本 */
+        }
+
+        .result-number, .result-label {
+            color: white;
+        }
+
+        /* 修改projects section的网格布局 */
+        #projects .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* 修改项目卡片的样式 */
+        #projects .skill-card {
+            text-decoration: none; /* 移除下划线 */
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 调整项目卡片的内容大小 */
+        #projects .skill-card h3 {
+            font-size: 1.1rem;
+            margin: 0.8rem 0;
+            color: var(--text);
+        }
+
+        #projects .skill-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* 调整项目图标大小 */
+        #projects .skill-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+
+        /* 响应式布局调整 */
+        @media (max-width: 1200px) {
+            #projects .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #projects .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #projects .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="scroll-progress"></div>
     <nav class="navbar">
         <div class="nav-content">
             <a href="#home" class="logo" style="text-decoration:none;">Ruiyu Wang</a>
@@ -413,66 +521,64 @@
             </p>
             
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">🎨</div>
+                    <h3>UX/UI Design</h3>
+                    <p>User-centered design approach with focus on accessibility and interaction</p>
+                </div>
+                <div class="skill-card fade-in">
                     <div class="skill-icon">🥽</div>
                     <h3>XR Development</h3>
-                    <p>Unity, C#, VR/AR applications with focus on immersive user experiences and interaction design</p>
+                    <p>Virtual and Augmented Reality applications using Unity and Unreal Engine</p>
                 </div>
-                
-                <div class="skill-card">
-                    <div class="skill-icon">🎨</div>
-                    <h3>UI/UX Design</h3>
-                    <p>Figma, user research, prototyping, and iterative design processes for digital products</p>
-                </div>
-                
-                <div class="skill-card">
+                <div class="skill-card fade-in">
                     <div class="skill-icon">🔬</div>
                     <h3>User Research</h3>
-                    <p>Data analysis, A/B testing, behavioral studies, and evidence-based design decisions</p>
+                    <p>Qualitative and quantitative research methods for experience optimization</p>
                 </div>
-                
-                <div class="skill-card">
+                <div class="skill-card fade-in">
                     <div class="skill-icon">💻</div>
-                    <h3>Frontend Development</h3>
-                    <p>React, JavaScript, responsive web design, and interactive web applications</p>
+                    <h3>Web Development</h3>
+                    <p>Interactive web experiences with modern frameworks and technologies</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Added simple placeholders so nav links work -->
     <section id="projects" style="background:#fff;">
-  <div class="container" style="padding:4rem 0;">
-    <h2 class="section-title">Projects</h2>
-    <p class="section-subtitle">Selected work in XR, UI/UX and interactive web.</p>
-    <div class="skills-grid" style="margin-top:2rem;">
-      <a class="skill-card" href="NAVI.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="skill-icon">📱</div>
-        <h3>NAVI — Autonomous City Navigation</h3>
-        <p>UX concept app with user-defined exploration modes and autonomy-centered design.</p>
-        <p style="margin-top:0.5rem;font-weight:600;">View case →</p>
-      </a>
-      <a class="skill-card" href="Wackamole.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="skill-icon">🥽</div>
-        <h3>Wackamole VR — Multiplayer Game</h3>
-        <p>Unity + C# VR gameplay with networking, haptics and interaction research.</p>
-        <p style="margin-top:0.5rem;font-weight:600;">View case →</p>
-      </a>
-      <a class="skill-card" href="hologram.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="skill-icon">🧪</div>
-        <h3>3D Hologram Museum Research</h3>
-        <p>Pepper’s Ghost evaluation on learning & experience in museum settings.</p>
-        <p style="margin-top:0.5rem;font-weight:600;">View case →</p>
-      </a>
-      <a class="skill-card" href="distwi.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="skill-icon">⚡</div>
-        <h3>DisTwi — Energy Hub Platform</h3>
-        <p>React-based digital twin of energy systems for real-time oversight.</p>
-        <p style="margin-top:0.5rem;font-weight:600;">View case →</p>
-      </a>
-    </div>
-  </div>
-</section>
+        <div class="container" style="padding:4rem 0;">
+            <h2 class="section-title">Projects</h2>
+            <p class="section-subtitle">Selected work in XR, UI/UX and interactive web</p>
+            
+            <div class="skills-grid">
+                <a href="hologram.html" class="skill-card fade-in">
+                    <div class="skill-icon">🧪</div>
+                    <h3>3D Hologram Museum Research</h3>
+                    <p>Museum experience research with Pepper's Ghost technology</p>
+                </a>
+                <a href="Wackamole.html" class="skill-card fade-in">
+                    <div class="skill-icon">🎮</div>
+                    <h3>Wackamole VR</h3>
+                    <p>Multiplayer VR game with innovative interaction design</p>
+                </a>
+                <a href="NAVI.html" class="skill-card fade-in">
+                    <div class="skill-icon">📱</div>
+                    <h3>NAVI Navigation App</h3>
+                    <p>City exploration with autonomous navigation features</p>
+                </a>
+                <a href="distwi.html" class="skill-card fade-in">
+                    <div class="skill-icon">⚡</div>
+                    <h3>DisTwi Energy Platform</h3>
+                    <p>Digital twin platform for energy management</p>
+                </a>
+                <a href="Yabusame.html" class="skill-card fade-in">
+                    <div class="skill-icon">🎯</div>
+                    <h3>Yabusame VR</h3>
+                    <p>Traditional Japanese archery experience in Virtual Reality</p>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <section id="about" style="background:#f8f9fa;">
       <div class="container" style="padding:4rem 0;">
@@ -496,7 +602,7 @@
                     <span>✉</span>
                     <span>ruiyu_wang@outlook.com</span>
                 </a>
-                <a href="https://linkedin.com/in/ruiyu-wang" class="contact-link" target="_blank">
+                <a href="https://www.linkedin.com/in/ruiyu-wang-578622264" class="contact-link" target="_blank">
                     <span>🔗</span>
                     <span>LinkedIn</span>
                 </a>
@@ -526,7 +632,14 @@
         // Navbar background on scroll
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+
+            scrollProgress.style.width = `${scrollPercent}%`;
+
+            if (scrollTop > 100) {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
                 navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
             } else {
