@@ -1,78 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruiyu Wang - Portfolio</title>
-    <style>
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruiyu Wang — Portfolio (Print Version)</title>
+<style>
+    @page { size: A4; margin: 0; }
 
-        .page {
-            width: 210mm;
-            height: 297mm;
-            padding: 20mm;
-            page-break-after: always;
-        }
+    :root{
+        --brand-1:#667eea; --brand-2:#764ba2;
+        --ink:#1c1f27; --ink-2:#3d4351; --muted:#6b7280; --line:#e4e7ec;
+        --mono:"SFMono-Regular",Menlo,Consolas,monospace;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+        font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+        line-height:1.62;color:var(--ink);background:#8a8f99;
+        -webkit-font-smoothing:antialiased;
+    }
+    .toolbar{
+        position:sticky;top:0;z-index:20;background:#1c1f27;color:#fff;padding:13px 24px;
+        display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    }
+    .toolbar p{font-size:.86rem;color:#c3cad6}
+    .toolbar .tb-actions{display:flex;gap:10px}
+    .tb-btn{
+        background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;
+        padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;
+        text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+    }
+    .tb-btn:hover{background:rgba(255,255,255,.22)}
+    .tb-btn.pri{background:var(--brand-1);border-color:var(--brand-1)}
+    .tb-btn.pri:hover{background:var(--brand-2)}
 
-        .project-header {
-            margin-bottom: 2rem;
-        }
+    .sheet{
+        width:210mm;min-height:297mm;margin:22px auto;background:#fff;
+        box-shadow:0 8px 40px rgba(0,0,0,.3);padding:18mm 16mm;position:relative;
+        overflow:hidden;page-break-after:always;
+    }
+    .sheet:last-of-type{page-break-after:auto}
 
-        .project-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
+    /* cover */
+    .cover{display:flex;flex-direction:column;justify-content:space-between;height:100%}
+    .cover-top{display:flex;justify-content:space-between;align-items:flex-start}
+    .cover .mark{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+    .cover h1{font-size:44pt;line-height:1.02;letter-spacing:-.035em;margin:0 0 10px}
+    .cover .role{font-size:15pt;color:var(--brand-1);font-weight:600;margin-bottom:20px;letter-spacing:-.01em}
+    .cover .stmt{font-size:11pt;color:var(--ink-2);max-width:150mm;line-height:1.7}
+    .cover .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 0}
+    .cover .strip div{background:#f7f8fa;border-radius:10px;padding:13px 15px}
+    .cover .strip b{display:block;font-size:8.5pt;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .cover .strip span{font-size:10pt;font-weight:600;color:var(--ink);line-height:1.4}
+    .cover-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;border-top:1px solid var(--line);padding-top:16px}
+    .cover-foot .ct{font-size:9.5pt;color:var(--muted);line-height:1.75}
+    .cover-foot .ct strong{color:var(--ink);font-weight:650}
 
-        .project-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
+    /* generic page */
+    .phead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;padding-bottom:11px;border-bottom:2px solid var(--ink)}
+    .phead h2{font-size:19pt;letter-spacing:-.022em}
+    .phead .pn{font-family:var(--mono);font-size:8.5pt;color:var(--muted);letter-spacing:.1em}
+    h3.sec{font-size:12.5pt;letter-spacing:-.01em;margin:18px 0 8px}
+    p{font-size:10pt;margin-bottom:9px;max-width:170mm}
+    p.lead{font-size:10.5pt;color:var(--ink-2)}
+    ul{margin:0 0 10px 17px;font-size:9.7pt}
+    li{margin-bottom:5px}
+    strong{font-weight:650}
+    em{font-style:normal;color:var(--brand-1);font-weight:600}
+    .imgbox{margin:14px 0;border-radius:11px;overflow:hidden;border:1px solid var(--line);background:#f7f8fa}
+    .imgbox img{width:100%;display:block}
+    .imgcap{font-size:8pt;color:var(--muted);padding:8px 12px;background:#f7f8fa;border-top:1px solid var(--line)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+    .fact{background:#eef1f8;border-left:3px solid var(--brand-1);border-radius:0 9px 9px 0;padding:12px 15px;margin:13px 0}
+    .fact p{margin:0;font-size:9.7pt;color:var(--ink-2)}
+    .fact .lbl{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:4px}
+    .metric{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+    .metric div{background:#f7f8fa;border-radius:9px;padding:12px}
+    .metric .v{font-size:16pt;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+    .metric .v small{font-size:9pt;color:var(--muted);font-weight:600}
+    .metric .d{font-size:7.8pt;color:var(--muted);margin-top:5px;line-height:1.45}
+    .tl{position:relative;padding-left:20px;margin:12px 0}
+    .tl::before{content:"";position:absolute;left:4px;top:5px;bottom:5px;width:2px;background:var(--line)}
+    .tli{position:relative;margin-bottom:13px}
+    .tli::before{content:"";position:absolute;left:-20px;top:4px;width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid var(--brand-1)}
+    .tli .w{font-family:var(--mono);font-size:8pt;color:var(--muted)}
+    .tli h4{font-size:10.5pt;margin:1px 0 2px}
+    .tli p{font-size:9pt;color:var(--ink-2);margin:0;max-width:none}
+    .stackgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:13px 0}
+    .stackgrid div{background:#f7f8fa;border-radius:9px;padding:12px 14px}
+    .stackgrid .lbl{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:7px}
+    .stackgrid .tags{display:flex;flex-wrap:wrap;gap:5px}
+    .stackgrid span{background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:8.2pt;color:var(--ink-2)}
+    .alt{background:#f7f8fa;border-radius:10px;padding:12px 14px;margin:10px 0}
+    .alt .tag{font-family:var(--mono);font-size:7.5pt;letter-spacing:.1em;text-transform:uppercase;color:#b91c1c;font-weight:700}
+    .alt h4{font-size:10.5pt;margin:4px 0 5px}
+    .alt p{font-size:9.3pt;color:var(--ink-2);margin-bottom:5px;max-width:none}
+    .alt .why{font-size:8.6pt;color:var(--muted);padding-top:6px;border-top:1px dashed var(--line);margin-bottom:0}
+    .states{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+    .state{border:1px solid var(--line);border-radius:9px;overflow:hidden}
+    .state .st{padding:8px 11px;font-size:9pt;font-weight:700;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line)}
+    .state .sb{padding:10px 12px;font-size:8.8pt;color:var(--ink-2);line-height:1.55}
+    .state .sb b{display:block;color:var(--ink);margin-bottom:4px;font-size:8.4pt}
+    .g{background:#e6f4f1;color:#0f766e}.a{background:#fef6e7;color:#b45309}
+    .b{background:#eef2ff;color:#1d4ed8}.p{background:#f5f0ff;color:#6d28d9}
+    .dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+    .foot{position:absolute;bottom:11mm;left:16mm;right:16mm;display:flex;justify-content:space-between;
+          border-top:1px solid var(--line);padding-top:8px;font-size:7.8pt;color:var(--muted)}
 
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-    </style>
+    @media print{
+        body{background:#fff}
+        .toolbar{display:none}
+        .sheet{margin:0;box-shadow:none;width:auto;min-height:auto;padding:0}
+        .sheet{padding:18mm 16mm}
+        .foot{position:static;margin-top:20px}
+    }
+</style>
 </head>
 <body>
-    <!-- Cover Page -->
-    <div class="page">
-        <h1>Ruiyu Wang</h1>
-        <h2>Interactive Designer & XR Developer</h2>
-        <p>Portfolio 2024</p>
-    </div>
 
-    <!-- NAVI Project -->
-    <div class="page">
-        <div class="project-header">
-            <h2 class="project-title">NAVI Navigation App</h2>
-            <p>Purpose-oriented city navigation for foreign travelers</p>
-        </div>
-        <img src="Ruiyu Wang 1 Openpage.png" class="project-image">
-        <!-- Add more NAVI content -->
-    </div>
+<div class="toolbar">
+  <p>Print view — use your browser's <strong>Print → Save as PDF</strong> to export this as a PDF deck.</p>
+  <div class="tb-actions">
+    <a class="tb-btn" href="index.html">← Back to site</a>
+    <button class="tb-btn pri" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
 
-    <!-- Hologram Project -->
-    <div class="page">
-        <!-- Add hologram content -->
+<!-- ========== 1 COVER ========== -->
+<div class="sheet">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="mark">Portfolio · 2026</div>
+      <div class="mark">Ruiyu Wang</div>
     </div>
+    <div>
+      <h1>Ruiyu Wang</h1>
+      <div class="role">AI Product Designer &amp; Human-AI Interaction Researcher</div>
+      <p class="stmt">
+        Grounded in cognitive science, I design AI products that stay honest about what they know.
+        My work sits where product definition meets implementation — from user interviews and PRDs to
+        retrieval pipelines, confidence-aware interfaces, and design decisions validated by research.
+      </p>
+      <div class="strip">
+        <div><b>Focus</b><span>AI product design · retrieval UX · grounded interfaces</span></div>
+        <div><b>Method</b><span>Interviews → prototype → build → evaluate</span></div>
+        <div><b>Base</b><span>Weimar, Germany · remote / hybrid</span></div>
+      </div>
+    </div>
+    <div class="cover-foot">
+      <div class="ct">
+        <strong>ruiyu_wang@outlook.com</strong> · +49 152 25263085<br>
+        linkedin.com/in/ruiyuwang · iriswang77.github.io/portfolio
+      </div>
+      <div class="ct" style="text-align:right">
+        M.Sc. HCI — Bauhaus-Universität Weimar<br>
+        B.Sc. Cognitive Science — Universität Tübingen
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Other projects... -->
+<!-- ========== 2 ABOUT ========== -->
+<div class="sheet">
+  <div class="phead"><h2>About &amp; Background</h2><span class="pn">02</span></div>
+
+  <p class="lead">
+    Cognitive science gives me the method — how people actually perceive, decide and act.
+    HCI gives me the craft. AI gives me the material. What I build sits where all three meet.
+  </p>
+
+  <div class="tl">
+    <div class="tli">
+      <div class="w">2024 — 2027</div>
+      <h4>M.Sc. Human-Computer Interaction — Bauhaus-Universität Weimar</h4>
+      <p>Thesis on measuring cognitive load in 3D holographic vs. 2D display. Expected graduation August 2027.</p>
+    </div>
+    <div class="tli">
+      <div class="w">2020 — 2024</div>
+      <h4>B.Sc. Cognitive Science — Universität Tübingen</h4>
+      <p>Psychology and biological neuroscience. Bachelor thesis graded 1.0 — the highest mark in the German grading scale.</p>
+    </div>
+    <div class="tli">
+      <div class="w">2026 — present</div>
+      <h4>Digital AI Intern — automotive OEM, production planning (China)</h4>
+      <p>Owned an AI training knowledge assistant end to end: user interviews, personas, positioning, feature list, user flow, PRD, Figma prototype, and the retrieval pipeline behind it.</p>
+    </div>
+    <div class="tli">
+      <div class="w">2025 — 2026</div>
+      <h4>Digital Architecture &amp; UI/UX Werkstudent — Klassik Stiftung Weimar</h4>
+      <p>Knowledge-graph metadata modelling for a national heritage data infrastructure; Figma interaction prototypes for 3D collections; usability research with 300+ VR visitors that changed the installation format from head-mounted to hand-held devices.</p>
+    </div>
+    <div class="tli">
+      <div class="w">2024 — 2025</div>
+      <h4>AI Product Assistant Intern — Outlier.ai (United States)</h4>
+      <p>Built a 300+ case evaluation library with a daily feedback loop into model iteration, and designed prompts to control output diversity. Worked across time zones with a US engineering team.</p>
+    </div>
+    <div class="tli">
+      <div class="w">2024</div>
+      <h4>User Research Intern — Leibniz Institute for Media Research</h4>
+      <p>Designed and executed the controlled experiment that became my bachelor's thesis — N=50 randomised, five measurement dimensions.</p>
+    </div>
+  </div>
+
+  <div class="fact">
+    <div class="lbl">How I work</div>
+    <p>
+      Define the problem precisely, build something real enough to test, and let evidence decide —
+      including when the evidence says the elegant solution is wrong. In AI work this means treating the
+      <strong>interface contract</strong> as the product: what the system claims, how it shows its sources,
+      and how it behaves when it does not know.
+    </p>
+  </div>
+</div>
+
+<!-- ========== 3 AI CASE ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Enterprise AI Knowledge Assistant</h2><span class="pn">03</span></div>
+  <div style="font-family:var(--mono);font-size:8.5pt;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:9px;">
+    Product case study · 0→1 definition &amp; delivery · sole owner
+  </div>
+
+  <p class="lead">
+    A retrieval-augmented assistant for employee training in the production-planning department of a
+    German automotive OEM in China. I owned the whole chain: interviews, product definition, prototype,
+    PRD, RAG pipeline, and the interface contract that keeps a probabilistic system honest.
+  </p>
+
+  <h3 class="sec">The problem was not a missing document — it was a missing answer</h3>
+  <p>
+    New joiners spent an average of <strong>45 minutes</strong> locating a single answer inside several
+    hundred pages of training material. Asking a colleague consumed about <strong>15 minutes</strong> of
+    that colleague's working time. The content existed; the path to it did not.
+  </p>
+  <p>
+    The brief asked for a knowledge-management tool. I argued for a different framing: not
+    <em>"find the document"</em> but <strong>"close the question"</strong>. Training questions are
+    procedural — a new joiner usually does not yet know what the right question is, so a search box
+    optimises the wrong moment. That reframing decided the architecture and the interface.
+  </p>
+
+  <h3 class="sec">Research finding that shaped the architecture</h3>
+  <p>
+    Interviews revealed that new joiners' real problem was not content volume but
+    <strong>trust</strong>: they could not tell a confident answer from a confident-sounding wrong one,
+    because the source material was too long to verify. That finding is why the system has a confidence
+    model, a source trail on every answer, and an explicit "I don't know" path.
+  </p>
+
+  <div class="fact">
+    <div class="lbl">Design principle</div>
+    <p>
+      If the assistant is wrong, the cost is not a bad sentence — it is a new employee acting on a
+      confident error in a production environment. Design for that, not for the demo.
+    </p>
+  </div>
+</div>
+
+<!-- ========== 4 AI STATES ========== -->
+<div class="sheet">
+  <div class="phead"><h2>The Human-AI Contract</h2><span class="pn">04</span></div>
+
+  <p class="lead">
+    Four states the interface has to support, and what the user is owed in each. This is the part of the
+    work I would put in front of a design review first.
+  </p>
+
+  <div class="states">
+    <div class="state">
+      <div class="st g"><span class="dot"></span>1 · Confident answer</div>
+      <div class="sb">
+        <b>Grounded, cited, actionable</b>
+        Retrieval was strong. The interface states the answer directly, shows a confidence level, and
+        attaches the source passage with image evidence. Two or three follow-up questions are offered
+        so the user can move on without re-typing.
+        <br><br><em>Owed:</em> speed, and verification in one click.
+      </div>
+    </div>
+    <div class="state">
+      <div class="st a"><span class="dot"></span>2 · Guided follow-up</div>
+      <div class="sb">
+        <b>The user repairs the question</b>
+        Relevant material was found but not enough to answer. Rather than guessing, the assistant narrows
+        the question, offering the plausible interpretations as a list to disambiguate.
+        <br><br><em>Owed:</em> a cheap way to fix the question, not a wrong answer.
+      </div>
+    </div>
+    <div class="state">
+      <div class="st b"><span class="dot"></span>3 · Low confidence</div>
+      <div class="sb">
+        <b>Uncertainty is displayed, not smoothed</b>
+        Evidence is thin. The answer states plainly that it is not confident, shows what it did find, and
+        marks the claim as unverified instead of presenting it as fact.
+        <br><br><em>Owed:</em> to know the difference before acting.
+      </div>
+    </div>
+    <div class="state">
+      <div class="st p"><span class="dot"></span>4 · Knowledge gap</div>
+      <div class="sb">
+        <b>An honest "not yet", routed to a human</b>
+        The corpus genuinely does not cover it. The system does not improvise — it files a gap report with
+        the question, what was searched and what was missing, so content owners can fix the source and the
+        next person gets a real answer.
+        <br><br><em>Owed:</em> honesty, and a way to get it fixed.
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">Pipeline — intent routing, not a search box</h3>
+  <p>
+    Every question is routed by <strong>intent before retrieval</strong>: a procedural question pulls the
+    step sequence in order, a factual question pulls a short cited excerpt, a comparative question pulls
+    two sources and reconciles them. The same layer handles language auto-detection, so a user can ask in
+    the language they think in.
+  </p>
+  <p>
+    Grounding is not an implementation detail — it is what the user experiences. Every answer carries its
+    passage, image evidence where the source contained a diagram, and a follow-up suggestion. Short-term
+    memory keeps multi-turn threads coherent.
+  </p>
+
+  <div class="fact">
+    <div class="lbl">Human control points</div>
+    <p>
+      The human stays in control at three points: choosing the intent path, answering a follow-up
+      question, and approving the final action. The system never decides what the user's question was
+      meant to be — it asks.
+    </p>
+  </div>
+</div>
+
+<!-- ========== 5 AI TRADE-OFFS + OUTCOME ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Trade-offs &amp; Outcome</h2><span class="pn">05</span></div>
+
+  <div class="alt">
+    <div class="tag">Rejected</div>
+    <h4>Fixed FAQ list + search box</h4>
+    <p>A static list of the most-asked questions with curated answers — faster to build and trivially accurate.</p>
+    <p>It fails whenever the question is not on the list, which is most of a new joiner's experience: they do not yet know what the FAQ contains, so they cannot search for it.</p>
+    <p class="why"><strong>Why rejected:</strong> it optimises for retrieving <em>known</em> questions. The population with the sharpest need is the one least able to name the question.</p>
+  </div>
+
+  <div class="alt">
+    <div class="tag">Rejected</div>
+    <h4>Pure chat interface, answer as a paragraph</h4>
+    <p>A clean transcript with a fluent prose answer — the most familiar pattern, and the one that demos best.</p>
+    <p>But prose is the format in which a wrong answer is most persuasive, and the format that hides provenance. A user reading a paragraph cannot tell which sentence came from the policy and which was generated.</p>
+    <p class="why"><strong>Why rejected:</strong> it optimises for the first thirty seconds and leaves the user unequipped for the moment they act on the answer.</p>
+  </div>
+
+  <h3 class="sec">Outcome</h3>
+  <div class="metric">
+    <div><div class="v">15 min → <small>seconds</small></div><div class="d">Average time to resolve a training question, vs. the previous manual-handling baseline.</div></div>
+    <div><div class="v">45 min → <small>~1 min</small></div><div class="d">Time to locate one answer inside several hundred pages of training material.</div></div>
+    <div><div class="v">3,000+</div><div class="d">Employees covered annually by the training function this assistant serves.</div></div>
+    <div><div class="v">&gt;90% <small>target</small></div><div class="d">Target answer-adoption rate set for the MVP — an acceptance criterion, not a measured result.</div></div>
+  </div>
+
+  <p>
+    I report the adoption figure as a <strong>target</strong>. The MVP was delivered and validated;
+    sustained-use adoption was the next measurement, not one I can quote today. Separating "we set this
+    bar" from "we cleared this bar" is the difference between a portfolio claim and a marketing claim.
+  </p>
+
+  <h3 class="sec">What I would do next</h3>
+  <ul>
+    <li><strong>Measure the states, not the traffic.</strong> The distribution across the four states — how often users land in follow-up, how often the system routes to a human — is the real quality metric of a retrieval system.</li>
+    <li><strong>Close the loop in the other direction.</strong> The gap report says what is missing; the same data should say which existing documents nobody ever reaches.</li>
+    <li><strong>Make confidence explainable.</strong> A percentage says how much to trust the answer. It does not say <em>why</em>, or what would change it.</li>
+  </ul>
+</div>
+
+<!-- ========== 6 WEATHER STATION ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Sensory Weather Station</h2><span class="pn">06</span></div>
+  <div style="font-family:var(--mono);font-size:8.5pt;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:9px;">
+    Embodied interaction research · hardware prototype · 16 weeks
+  </div>
+
+  <p class="lead">
+    A multimodal environmental terminal that turns abstract weather data into immediate physical
+    sensation — temperature, airflow and real water droplets. Led the project as originator, hardware
+    lead and interaction-logic designer.
+  </p>
+
+  <h3 class="sec">Why</h3>
+  <p>
+    We live in an age of visual information overload: a forecast gets compressed into numbers,
+    percentages and icons, producing <em>perceptual numbness</em>. You can read 5°C without connecting
+    it to cold on your skin. The station's premise was to break that gap — to move the design question
+    from "information display" to <strong>"sensory mapping"</strong>.
+  </p>
+
+  <h3 class="sec">Prototyping</h3>
+  <p>
+    Custom precision shower heads produced with FDM/SLA 3D printing, laser-cut and hand-assembled into
+    a fully enclosed interaction chamber. An Arduino Uno coordinates the system, driving high-power
+    thermoelectric and hydrodynamic modules through MOSFETs.
+  </p>
+  <p>
+    The core engineering bottleneck was <strong>thermal inertia</strong>. I moved the architecture from a
+    single-Peltier approach to a <strong>dual-semiconductor independent temperature-control system</strong>,
+    which substantially improved response sensitivity when simulating seasonal transitions. A sealed
+    isolation structure decouples the electronics from the water circuit physically.
+  </p>
+
+  <h3 class="sec">User study — 13 participants</h3>
+  <p>
+    13 participants with HCI and engineering backgrounds, 20-minute semi-structured interviews, coded in
+    Miro within the Braun &amp; Clarke framework, yielding <strong>7 core interaction dimensions</strong>.
+  </p>
+
+  <div class="imgbox">
+    <img src="assets/portfolio-pdf/weather-station-affinity.png" alt="Thematic analysis affinity map from the user study">
+    <div class="imgcap">Thematic analysis affinity map — 13 participants, 7 core interaction dimensions (Braun &amp; Clarke coding in Miro).</div>
+  </div>
+
+  <div class="fact">
+    <div class="lbl">Findings</div>
+    <p>
+      <strong>Sensory fidelity</strong> — the combined temperature and airflow successfully triggered an
+      instinctive "cold winter wind" response. &nbsp;<strong>Cognitive conflict</strong> — simulated rain
+      was described as a "spa experience" rather than natural rain, exposing the gap between digital
+      simulation and organic intuition. &nbsp;<strong>Usability barrier</strong> — the need to dry your
+      hands after interaction significantly reduced willingness to use it long-term.
+    </p>
+  </div>
+</div>
+
+<!-- ========== 7 DIGITAL TWIN ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Bauhaus Energy Hub — Digital Twin Platform</h2><span class="pn">07</span></div>
+  <div style="font-family:var(--mono);font-size:8.5pt;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:9px;">
+    Digital twin · UI/UX · adaptive interaction · 16 weeks
+  </div>
+
+  <p class="lead">
+    A 3D digital twin of the Bauhaus Energy Hub — a "living lab" exploring sustainable living and
+    energy self-sufficiency — built to solve a problem where data real-time-ness and interaction
+    intuitiveness were in direct conflict.
+  </p>
+
+  <h3 class="sec">The problem</h3>
+  <p>
+    Professional engineers were drowned in raw data, while non-technical users could not locate a fault
+    point inside a complex 3D model. One interface could not serve both. As UI/UX lead I set the
+    design anchor at <strong>adaptive perception</strong>: a dynamic interaction layer that adjusts the
+    mapping between 3D space and UI hierarchy according to task context and the user's expertise.
+  </p>
+
+  <div class="two">
+    <div class="fact" style="margin:0">
+      <div class="lbl">Expert mode</div>
+      <p>For facility maintenance engineers: high-density real-time curves, raw sensor logs and the full
+      structural cutaway of the building — complete data transparency.</p>
+    </div>
+    <div class="fact" style="margin:0">
+      <div class="lbl">General mode</div>
+      <p>For non-technical management: raw IoT values translated into heat maps and status signals —
+      zero-barrier monitoring.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:13px;">
+    <em>"Adaptive design is not just about changing layouts, but about aligning technology with the
+    user's cognitive boundaries."</em>
+  </p>
+
+  <h3 class="sec">Implementation</h3>
+  <p>
+    3D modelling of the living-lab environment and its furniture in Blender, optimised for a real-time
+    engine; integration of Unity 3D with IoT data mapping; and a responsive web UI layer carrying the
+    two adaptive modes.
+  </p>
+  <p>
+    The result is not a static list of information but a system that changes what it shows according to
+    the current task and the user's professional background — a direct application of cognitive-load
+    principles to industrial monitoring.
+  </p>
+</div>
+
+<!-- ========== 8 HOLOGRAM ========== -->
+<div class="sheet">
+  <div class="phead"><h2>3D Holographic Display vs. 2D — Museum Experiment</h2><span class="pn">08</span></div>
+  <div style="font-family:var(--mono);font-size:8.5pt;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:9px;">
+    Controlled experiment · bachelor thesis · grade 1.0
+  </div>
+
+  <p class="lead">
+    A randomised controlled experiment comparing Pepper's Ghost holographic display against a
+    conventional 2D screen in a maritime museum exhibition — designed, executed and analysed
+    independently.
+  </p>
+
+  <div class="imgbox">
+    <img src="assets/portfolio-pdf/hologram-concept.png" alt="Pepper's Ghost holographic display concept">
+    <div class="imgcap">Pepper's Ghost holographic display — the condition compared against a standard 2D screen.</div>
+  </div>
+
+  <h3 class="sec">Method</h3>
+  <p>
+    <strong>N=50</strong> participants, randomly assigned. Five measurement families: presence, visitor
+    experience (education / aesthetics / entertainment / escapism), experience attitude, cognitive load
+    (ECL / GCL / ICL), and knowledge retention via a post-test. Analysed in R with Shapiro-Wilk
+    normality testing, then Mann-Whitney U for non-normal variables and two-sample t-tests with effect
+    sizes for normal ones.
+  </p>
+
+  <h3 class="sec">The finding that mattered</h3>
+  <p>
+    The holographic condition scored better on visual appeal — but <strong>no measurement dimension
+    reached statistical significance</strong>. Rather than stopping there, I traced the mechanism: a
+    non-interactive hologram turns the visitor into a passive observer. <strong>Interactivity, not visual
+    novelty, is what drives immersion and engagement.</strong>
+  </p>
+
+  <div class="fact">
+    <div class="lbl">Why this matters beyond the thesis</div>
+    <p>
+      That insight closes a method loop with my other work — the VR installation research, where
+      head-mounted displays were replaced with hand-held devices and interaction elements were added for
+      exactly the same reason. An honest null result that produced a transferable design principle is
+      worth more than a positive number.
+    </p>
+  </div>
+</div>
+
+<!-- ========== 9 WACKAMOLE + YABUSAME ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Wack-A-Mole VR &amp; Yabusame VR</h2><span class="pn">09</span></div>
+
+  <h3 class="sec">Wack-A-Mole — multiplayer synchronised VR · 14 weeks</h3>
+  <p class="lead" style="margin-bottom:11px;">
+    A multiplayer VR game with the core task of synchronising player action across multiple headsets.
+    Unity 3D, Meta Quest 2, OpenXR and Blender; I was the originator, hardware lead and interaction
+    designer.
+  </p>
+
+  <div class="two">
+    <div class="fact" style="margin:0">
+      <div class="lbl">Challenge 01 · Co-located spatial mapping</div>
+      <p>Multiple players moving through one physical laboratory means any coordinate drift causes
+      collisions in reality. Solved with a unified spatial-anchor calibration, normalising coordinates
+      across headsets in a 360° environment to preserve both safety and competitive fairness.</p>
+    </div>
+    <div class="fact" style="margin:0">
+      <div class="lbl">Challenge 02 · The "haptic gap"</div>
+      <p>Virtual environments lack physical resistance — a hammer passes straight through the target and
+      breaks immersion. Solved with multimodal compensation: colour change on impact plus OpenXR
+      controller vibration, synchronised so the brain infers that a collision occurred.</p>
+    </div>
+  </div>
+
+  <div class="imgbox" style="margin-top:15px;">
+    <img src="assets/portfolio-pdf/wackamole-concept.png" alt="Wack-A-Mole concept sketch" style="max-height:74mm;object-fit:contain;background:#fff">
+    <div class="imgcap">Wack-A-Mole concept sketch — the hammer, the mole and the "crowned" bonus target.</div>
+  </div>
+
+  <h3 class="sec" style="margin-top:16px;">Yabusame VR — historical narrative in VR</h3>
+  <p>
+    A cross-disciplinary team project bringing a historical narrative scene into VR, developed for the
+    2022 Coding da Vinci Hackathon in Germany, where it won <strong>first place in the VR track</strong>.
+    The award sits alongside the provincial photography prize and a school English-drama award — early
+    evidence of a persistent pull toward narrative, visual composition and cross-disciplinary work.
+  </p>
+</div>
+
+<!-- ========== 10 STACK ========== -->
+<div class="sheet">
+  <div class="phead"><h2>Tech Stack &amp; Research Methods</h2><span class="pn">10</span></div>
+
+  <div class="stackgrid">
+    <div>
+      <div class="lbl" style="color:#667eea">AI</div>
+      <div class="tags">
+        <span>RAG &amp; vector retrieval</span><span>Prompt engineering</span>
+        <span>Human-AI interaction</span><span>LLM evaluation</span>
+        <span>Dify</span><span>Cognitive load analysis</span><span>Data architecture</span>
+      </div>
+    </div>
+    <div>
+      <div class="lbl" style="color:#764ba2">Design</div>
+      <div class="tags">
+        <span>Figma</span><span>Design systems</span><span>Cognitive UX</span>
+        <span>Adobe Creative Suite</span><span>Prototype &amp; flow design</span>
+      </div>
+    </div>
+    <div>
+      <div class="lbl" style="color:#0f766e">Research</div>
+      <div class="tags">
+        <span>Semi-structured interviews</span><span>Thematic analysis</span>
+        <span>Controlled experiments</span><span>Usability testing</span>
+        <span>Python</span><span>R / statistical testing</span><span>Miro</span>
+      </div>
+    </div>
+    <div>
+      <div class="lbl" style="color:#b45309">Computing</div>
+      <div class="tags">
+        <span>Unity 3D / C#</span><span>Blender</span><span>OpenXR</span>
+        <span>Arduino / MOSFET</span><span>HTML / CSS / JS</span><span>Physical computing</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">Languages</h3>
+  <p>Chinese (native) · German (DSH-2) · English (IELTS 7.0) · six years living and working in Germany.</p>
+
+  <h3 class="sec">Selected recognition</h3>
+  <ul>
+    <li><strong>2022 — Coding da Vinci Hackathon, Germany: first place, VR track</strong> (Yabusame)</li>
+    <li><strong>Bachelor thesis graded 1.0</strong> — highest mark in the German grading scale (Universität Tübingen)</li>
+    <li>Provincial photography competition, first prize (primary school)</li>
+    <li>English drama performance, second prize — wrote the script (secondary school)</li>
+  </ul>
+
+  <div class="fact">
+    <div class="lbl">A note on confidentiality</div>
+    <p>
+      Client identity, department codes, internal system names, employee data and absolute person-hour
+      figures have been abstracted throughout this document. Source excerpts shown in prototypes are
+      written for demonstration and are not client documents.
+    </p>
+  </div>
+
+  <div class="foot">
+    <span>Ruiyu Wang — Portfolio 2026</span>
+    <span>ruiyu_wang@outlook.com · iriswang77.github.io/portfolio</span>
+  </div>
+</div>
+
 </body>
 </html>

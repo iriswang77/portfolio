@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruiyu Wang - Interactive Designer & XR Developer</title>
+    <title>Ruiyu Wang - AI Product Designer &amp; Human-AI Interaction Researcher</title>
+    <meta name="description" content="Ruiyu Wang - HCI designer and AI product researcher. Cognitive science background, building AI products that stay grounded: retrieval systems, confidence-aware interfaces, and design decisions validated by user research.">
     <style>
         :root {
             --brand-1: #667eea; /* 主色 */
@@ -410,9 +411,14 @@
         /* 修改projects section的网格布局 */
         #projects .skills-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-top: 3rem;
+        }
+
+        /* AI 案例卡横跨两列，作为视觉主入口 */
+        #projects .skills-grid > a:first-child {
+            grid-column: span 2;
         }
 
         /* 修改项目卡片的样式 */
@@ -425,6 +431,10 @@
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         /* 调整项目卡片的内容大小 */
@@ -440,6 +450,16 @@
             margin: 0;
         }
 
+        /* AI 案例卡的文字左对齐、篇幅更长 */
+        #projects .skill-card:first-child {
+            text-align: left;
+            align-items: flex-start;
+        }
+        #projects .skill-card:first-child p {
+            font-size: 0.93rem;
+            line-height: 1.65;
+        }
+
         /* 调整项目图标大小 */
         #projects .skill-icon {
             width: 50px;
@@ -448,21 +468,18 @@
         }
 
         /* 响应式布局调整 */
-        @media (max-width: 1200px) {
-            #projects .skills-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 980px) {
             #projects .skills-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 620px) {
             #projects .skills-grid {
                 grid-template-columns: 1fr;
+            }
+            #projects .skills-grid > a:first-child {
+                grid-column: span 1;
             }
         }
     </style>
@@ -476,6 +493,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#stack">Stack</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -490,19 +508,20 @@
         
         <div class="hero-content">
             <h1 class="hero-title">Ruiyu Wang</h1>
-            <p class="hero-subtitle">Interactive Designer & XR Developer</p>
+            <p class="hero-subtitle">AI Product Designer &amp; Human-AI Interaction Researcher</p>
             <p class="hero-description">
-                Bridging cognitive science and human-computer interaction to create meaningful digital experiences. 
-                Specializing in VR/AR applications, user research, and innovative interface design.
+                Grounded in cognitive science, I design AI products that stay honest about what they know.
+                My work sits where product definition meets implementation — from user interviews and PRDs
+                to retrieval pipelines, confidence-aware interfaces, and design decisions validated by research.
             </p>
             <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">
-                    <span>View My Work</span>
+                <a href="ai-product.html" class="btn btn-primary">
+                    <span>AI Product Case Study</span>
                     <span>→</span>
                 </a>
-                <a href="mailto:ruiyu_wang@outlook.com" class="btn btn-secondary">
-                    <span>Get In Touch</span>
-                    <span>✉</span>
+                <a href="#projects" class="btn btn-secondary">
+                    <span>All Work</span>
+                    <span>↓</span>
                 </a>
             </div>
         </div>
@@ -517,29 +536,30 @@
         <div class="container">
             <h2 class="section-title">Expertise</h2>
             <p class="section-subtitle">
-                Combining technical skills with user-centered design thinking to create impactful digital solutions
+                The rare combination of user research, product definition and AI implementation —
+                so a design decision can be reasoned about, built, and verified
             </p>
-            
+
             <div class="skills-grid">
                 <div class="skill-card fade-in">
-                    <div class="skill-icon">🎨</div>
-                    <h3>UX/UI Design</h3>
-                    <p>User-centered design approach with focus on accessibility and interaction</p>
+                    <div class="skill-icon">🤖</div>
+                    <h3>AI Product Definition</h3>
+                    <p>0→1 product work: interviews, personas, positioning, feature lists, user flows and PRDs — for AI features, where the interface contract matters as much as the model</p>
                 </div>
                 <div class="skill-card fade-in">
-                    <div class="skill-icon">🥽</div>
-                    <h3>XR Development</h3>
-                    <p>Virtual and Augmented Reality applications using Unity and Unreal Engine</p>
+                    <div class="skill-icon">🔗</div>
+                    <h3>Retrieval &amp; Grounding</h3>
+                    <p>Dynamic workflow orchestration and multi-source RAG with re-ranking, confidence scoring, source traceability and guided follow-ups to keep answers honest</p>
                 </div>
                 <div class="skill-card fade-in">
                     <div class="skill-icon">🔬</div>
                     <h3>User Research</h3>
-                    <p>Qualitative and quantitative research methods for experience optimization</p>
+                    <p>Controlled experiments, semi-structured interviews and thematic analysis — used to change design decisions, not to decorate them</p>
                 </div>
                 <div class="skill-card fade-in">
-                    <div class="skill-icon">💻</div>
-                    <h3>Web Development</h3>
-                    <p>Interactive web experiences with modern frameworks and technologies</p>
+                    <div class="skill-icon">🎯</div>
+                    <h3>Interaction &amp; XR</h3>
+                    <p>Adaptive interfaces, embodied interaction and spatial computing in Unity, Figma and Blender — with the implementation to prove a prototype</p>
                 </div>
             </div>
         </div>
@@ -548,33 +568,43 @@
     <section id="projects" style="background:#fff;">
         <div class="container" style="padding:4rem 0;">
             <h2 class="section-title">Projects</h2>
-            <p class="section-subtitle">Selected work in XR, UI/UX and interactive web</p>
-            
+            <p class="section-subtitle">Selected work in AI product design, interaction research and immersive interfaces</p>
+
             <div class="skills-grid">
+                <a href="ai-product.html" class="skill-card fade-in" style="grid-column:span 2;background:linear-gradient(135deg,#eef1f8 0%,#e5e1f2 100%);">
+                    <div class="skill-icon">🤖</div>
+                    <h3>Enterprise AI Knowledge Assistant</h3>
+                    <p>Product case study — 0→1 definition and delivery of a retrieval assistant for 3,000+ employees: intent routing, multi-source RAG, confidence scoring and source traceability. Includes an interactive prototype.</p>
+                </a>
+                <a href="ai-prototype.html" class="skill-card fade-in" style="background:linear-gradient(135deg,#eef1f8 0%,#e5e1f2 100%);">
+                    <div class="skill-icon">▶</div>
+                    <h3>Prototype: Grounded AI Assistant</h3>
+                    <p>Interactive — the four states of a retrieval system, and the contract each one keeps with the user</p>
+                </a>
                 <a href="hologram.html" class="skill-card fade-in">
                     <div class="skill-icon">🧪</div>
                     <h3>3D Hologram Museum Research</h3>
-                    <p>Museum experience research with Pepper's Ghost technology</p>
+                    <p>Controlled experiment on Pepper's Ghost vs. 2D display — presence, cognitive load and knowledge retention (BSc thesis, grade 1.0)</p>
                 </a>
-                <a href="Wackamole.html" class="skill-card fade-in">
-                    <div class="skill-icon">🎮</div>
-                    <h3>Wackamole VR</h3>
-                    <p>Multiplayer VR game with innovative interaction design</p>
+                <a href="distwi.html" class="skill-card fade-in">
+                    <div class="skill-icon">📊</div>
+                    <h3>DisTwi Energy Platform</h3>
+                    <p>Adaptive-perception digital twin for a Bauhaus "living lab" — one data model, expert and non-expert interface layers</p>
                 </a>
                 <a href="NAVI.html" class="skill-card fade-in">
                     <div class="skill-icon">📱</div>
                     <h3>NAVI Navigation App</h3>
                     <p>City exploration with autonomous navigation features</p>
                 </a>
-                <a href="distwi.html" class="skill-card fade-in">
-                    <div class="skill-icon">⚡</div>
-                    <h3>DisTwi Energy Platform</h3>
-                    <p>Digital twin platform for energy management</p>
+                <a href="Wackamole.html" class="skill-card fade-in">
+                    <div class="skill-icon">🎮</div>
+                    <h3>Wackamole VR</h3>
+                    <p>Multiplayer VR with co-located spatial mapping and multimodal haptic compensation</p>
                 </a>
                 <a href="Yabusame.html" class="skill-card fade-in">
                     <div class="skill-icon">🎯</div>
                     <h3>Yabusame VR</h3>
-                    <p>Traditional Japanese archery experience in Virtual Reality</p>
+                    <p>Historical narrative in VR — winner, VR track, Coding da Vinci Hackathon 2022</p>
                 </a>
             </div>
         </div>
@@ -584,9 +614,149 @@
       <div class="container" style="padding:4rem 0;">
         <h2 class="section-title">About</h2>
         <p class="section-subtitle">
-          I bridge cognitive science and HCI to craft human-centered XR experiences. 
-          Previously worked on prototyping, user studies, and data-driven iteration.
+          Cognitive science gives me the method — how people actually perceive, decide and act.
+          HCI gives me the craft. AI gives me the material. What I build sits where all three meet.
         </p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2.5rem;margin-top:2.5rem;align-items:start;">
+          <div>
+            <h3 style="font-size:1.05rem;margin-bottom:1.1rem;">Background</h3>
+            <div style="position:relative;padding-left:22px;">
+              <div style="position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:#dde1e8;"></div>
+
+              <div style="position:relative;margin-bottom:1.4rem;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #667eea;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2024 — 2027</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">M.Sc. Human-Computer Interaction — Bauhaus-Universität Weimar</div>
+                <div style="font-size:.88rem;color:#666;">Thesis: measuring cognitive load in 3D holographic vs. 2D display</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:1.4rem;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #667eea;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2020 — 2024</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">B.Sc. Cognitive Science — Universität Tübingen</div>
+                <div style="font-size:.88rem;color:#666;">Thesis graded 1.0 — highest mark in the German grading scale</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:1.4rem;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #764ba2;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2026 — present</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">Digital AI Intern — automotive OEM, production planning (China)</div>
+                <div style="font-size:.88rem;color:#666;">Owned the AI training knowledge assistant end to end — research, product definition, PRD, prototype and RAG build</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:1.4rem;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #764ba2;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2025 — 2026</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">Digital Architecture &amp; UI/UX Werkstudent — Klassik Stiftung Weimar</div>
+                <div style="font-size:.88rem;color:#666;">Knowledge-graph metadata modelling, Figma interaction prototypes, and usability research with 300+ VR visitors that changed the installation format</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:1.4rem;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #764ba2;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2024 — 2025</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">AI Product Assistant Intern — Outlier.ai (US)</div>
+                <div style="font-size:.88rem;color:#666;">Built a 300+ case evaluation library with a daily feedback loop, plus prompt design for output diversity</div>
+              </div>
+
+              <div style="position:relative;">
+                <div style="position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #764ba2;"></div>
+                <div style="font-size:.76rem;color:#6b7280;font-family:'SFMono-Regular',Menlo,monospace;">2024</div>
+                <div style="font-weight:650;font-size:.95rem;margin:2px 0 3px;">User Research Intern — Leibniz Institute for Media Research</div>
+                <div style="font-size:.88rem;color:#666;">Designed and ran the controlled experiment that became my bachelor's thesis</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:1.05rem;margin-bottom:1.1rem;">How I work</h3>
+            <p style="font-size:.92rem;color:#555;margin-bottom:1rem;">
+              My pattern is consistent: <strong style="color:#333;">define the problem precisely, build
+              something real enough to test, and let evidence decide</strong> — including when the
+              evidence says the elegant solution is wrong.
+            </p>
+            <p style="font-size:.92rem;color:#555;margin-bottom:1.5rem;">
+              In the AI work that means treating the <em>interface contract</em> as the product: what the
+              system claims, how it shows its sources, and how it behaves when it does not know.
+            </p>
+
+            <h3 style="font-size:1.05rem;margin:1.8rem 0 1.1rem;">Languages &amp; mobility</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:999px;padding:6px 14px;font-size:.84rem;">Chinese · native</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:999px;padding:6px 14px;font-size:.84rem;">German · DSH-2</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:999px;padding:6px 14px;font-size:.84rem;">English · IELTS 7.0</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:999px;padding:6px 14px;font-size:.84rem;">Based in Germany · 6 years</span>
+            </div>
+
+            <h3 style="font-size:1.05rem;margin:1.8rem 0 1.1rem;">Portfolio PDF</h3>
+            <p style="font-size:.9rem;color:#555;margin-bottom:.9rem;">
+              The full deck version — project details, process and findings — as a single document.
+            </p>
+            <a href="portfolio-pdf.html" class="btn btn-secondary" style="border-color:#dde1e8;color:#333;background:#fff;">
+              <span>View PDF version</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TECH STACK ===== -->
+    <section id="stack" style="background:#fff;">
+      <div class="container" style="padding:4rem 0;">
+        <h2 class="section-title">Tech Stack</h2>
+        <p class="section-subtitle">The tools I reach for, and why each one is on the list</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2.5rem;">
+
+          <div style="background:#f8f9fa;border-radius:15px;padding:1.8rem;">
+            <div style="font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:#667eea;font-weight:700;margin-bottom:1rem;">AI</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">RAG &amp; vector retrieval</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Prompt engineering</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Human-AI interaction</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">LLM evaluation</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Dify</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Cognitive load analysis</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Data architecture</span>
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:15px;padding:1.8rem;">
+            <div style="font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:#764ba2;font-weight:700;margin-bottom:1rem;">Design</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Figma</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Design systems</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Cognitive UX</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Adobe Creative Suite</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Prototype &amp; flow design</span>
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:15px;padding:1.8rem;">
+            <div style="font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:#0f766e;font-weight:700;margin-bottom:1rem;">Research</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Semi-structured interviews</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Thematic analysis</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Controlled experiments</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Usability testing</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Python</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Miro</span>
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:15px;padding:1.8rem;">
+            <div style="font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:#b45309;font-weight:700;margin-bottom:1rem;">Computing</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Unity 3D / C#</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Blender</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">OpenXR</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">Arduino</span>
+              <span style="background:#fff;border:1px solid #e4e7ec;border-radius:8px;padding:6px 11px;font-size:.84rem;">HTML / CSS / JS</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
@@ -594,21 +764,26 @@
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
             <p class="section-subtitle">
-                Currently based in Weimar, Germany - Open to opportunities in interactive design and XR development
+                Currently based in Weimar, Germany — open to AI product design and human-AI interaction work,
+                remote or hybrid across Europe and Asia
             </p>
-            
+
             <div class="contact-links">
                 <a href="mailto:ruiyu_wang@outlook.com" class="contact-link">
                     <span>✉</span>
                     <span>ruiyu_wang@outlook.com</span>
                 </a>
-                <a href="https://www.linkedin.com/in/ruiyuwang" class="contact-link" target="_blank">
+                <a href="https://www.linkedin.com/in/ruiyuwang" class="contact-link" target="_blank" rel="noopener">
                     <span>🔗</span>
                     <span>LinkedIn</span>
                 </a>
                 <a href="tel:+4915225263085" class="contact-link">
                     <span>📱</span>
                     <span>+49 152 25263085</span>
+                </a>
+                <a href="ai-product.html" class="contact-link">
+                    <span>🤖</span>
+                    <span>AI Product Case Study</span>
                 </a>
             </div>
         </div>

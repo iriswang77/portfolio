@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Knowledge Assistant — Product Case Study | Ruiyu Wang</title>
+<meta name="description" content="Product case study: designing a retrieval-augmented knowledge assistant for employee training — from user research and product definition to a working MVP with confidence scoring, guided follow-ups and source traceability.">
+<style>
+:root{
+    --brand-1:#667eea;
+    --brand-2:#764ba2;
+    --ink:#1c1f27;
+    --ink-2:#3d4351;
+    --muted:#6b7280;
+    --line:#e4e7ec;
+    --bg:#ffffff;
+    --bg-soft:#f7f8fa;
+    --bg-tint:#eef1f8;
+    --white:#fff;
+    --warn:#b45309;
+    --warn-bg:#fef6e7;
+    --good:#0f766e;
+    --good-bg:#e6f4f1;
+    --accent:#4338ca;
+    --mono:"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.72;color:var(--ink);background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+
+/* ---------- nav ---------- */
+.nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+}
+.nav-in{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:700;font-size:1.02rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-weight:400}
+.nav-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
+.nav-links a{color:var(--ink-2);text-decoration:none;font-size:.88rem;font-weight:500}
+.nav-links a:hover{color:var(--brand-1)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:68px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.sec-num{font-family:var(--mono);font-size:.76rem;letter-spacing:.16em;color:var(--brand-1);font-weight:600;margin-bottom:10px}
+h2{font-size:clamp(1.5rem,3vw,2.05rem);letter-spacing:-.022em;line-height:1.24;margin-bottom:14px}
+h3{font-size:1.1rem;letter-spacing:-.01em;margin:26px 0 10px}
+.lead{font-size:1.05rem;color:var(--ink-2);max-width:74ch}
+p{margin-bottom:14px;max-width:74ch}
+.tight p{max-width:none}
+ul{margin:0 0 16px 20px;max-width:72ch}
+li{margin-bottom:7px}
+strong{font-weight:650;color:var(--ink)}
+em{font-style:normal;color:var(--brand-1);font-weight:600}
+a{color:var(--brand-1)}
+
+/* ---------- hero ---------- */
+.hero{padding:76px 0 60px;background:
+    radial-gradient(900px 400px at 12% -8%, rgba(102,126,234,.16), transparent 60%),
+    radial-gradient(700px 380px at 92% 0%, rgba(118,75,162,.14), transparent 62%),
+    var(--bg);}
+.badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--white);border:1px solid var(--line);
+    padding:6px 14px;border-radius:999px;
+    font-size:.78rem;font-weight:600;color:var(--ink-2);
+    box-shadow:0 1px 2px rgba(16,24,40,.05);margin-bottom:24px;
+}
+.badge i{width:7px;height:7px;border-radius:50%;background:#10b981;display:block}
+h1{font-size:clamp(2.05rem,4.6vw,3.15rem);line-height:1.1;letter-spacing:-.032em;max-width:19ch;margin-bottom:20px}
+.hero .lead{font-size:1.13rem;color:var(--ink-2);max-width:66ch}
+.meta-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;margin-top:40px;
+}
+.meta-grid div{background:var(--white);padding:16px 18px}
+.meta-grid dt{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.meta-grid dd{font-size:.93rem;font-weight:600;color:var(--ink);line-height:1.45}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:12px 22px;border-radius:999px;text-decoration:none;
+    font-weight:600;font-size:.93rem;border:1px solid transparent;transition:.2s;
+}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,24,40,.18)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-ghost:hover{border-color:var(--brand-1);color:var(--brand-1);transform:translateY(-2px)}
+
+/* ---------- cards & grids ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:26px 0}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin:26px 0}
+.card{
+    background:var(--white);border:1px solid var(--line);border-radius:14px;
+    padding:22px 22px 20px;position:relative;
+}
+.card.soft{background:var(--bg-soft);border-color:transparent}
+.card h4{font-size:.98rem;letter-spacing:-.01em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:.9rem;color:var(--ink-2);margin-bottom:0}
+.card .k{font-family:var(--mono);font-size:.72rem;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:.08em}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.g{background:#10b981}.dot.a{background:#f59e0b}.dot.b{background:#3b82f6}.dot.p{background:#8b5cf6}
+
+.fact{background:var(--bg-tint);border-left:3px solid var(--brand-1);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+.fact p{margin-bottom:0;font-size:.95rem;color:var(--ink-2)}
+.fact .lbl{font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-1);font-weight:700;margin-bottom:5px}
+
+/* ---------- metric ---------- */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:28px 0}
+.metric{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px}
+.metric .v{font-size:1.85rem;font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1.1}
+.metric .v small{font-size:.95rem;font-weight:600;color:var(--muted);letter-spacing:0}
+.metric .d{font-size:.83rem;color:var(--muted);margin-top:8px;line-height:1.5}
+
+/* ---------- states (human-AI contract) ---------- */
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px;margin:28px 0}
+.state{
+    background:var(--white);border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;display:flex;flex-direction:column;
+}
+.state-top{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+.state-top .t{font-size:.86rem;font-weight:700;letter-spacing:-.01em}
+.state-top .n{margin-left:auto;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.state-body{padding:16px 18px;font-size:.88rem;color:var(--ink-2);flex:1}
+.state-body p{margin-bottom:10px;max-width:none}
+.state-body p:last-child{margin-bottom:0}
+.state-foot{padding:12px 18px;background:var(--bg-soft);font-size:.8rem;color:var(--muted);border-top:1px solid var(--line)}
+.state-foot b{color:var(--ink-2);font-weight:650}
+
+.conf-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:10px 0 12px}
+.conf-bar i{display:block;height:100%;border-radius:99px}
+.q-chip{
+    display:inline-block;background:var(--bg-tint);border:1px solid var(--line);
+    border-radius:8px;padding:5px 10px;font-size:.8rem;color:var(--ink-2);margin:3px 4px 0 0;
+}
+
+/* ---------- alternatives ---------- */
+.alt{background:var(--bg-soft);border-radius:14px;padding:20px 22px;margin:18px 0;border:1px solid transparent}
+.alt-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.alt-head .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.alt-head .rejected{color:#b91c1c}
+.alt-head .chosen{color:var(--good)}
+.alt h4{font-size:1rem;margin-bottom:8px}
+.alt p{font-size:.91rem;color:var(--ink-2);margin-bottom:8px}
+.alt p:last-child{margin-bottom:0}
+.alt .why{font-size:.85rem;color:var(--muted);padding-top:9px;border-top:1px dashed var(--line)}
+
+/* ---------- architecture diagram ---------- */
+.diagram{background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:26px 22px;margin:28px 0;overflow-x:auto}
+.diagram svg{display:block;min-width:660px;width:100%;height:auto}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:block}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;padding-left:26px;margin:24px 0}
+.tl::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl-item{position:relative;padding:0 0 24px}
+.tl-item::before{content:"";position:absolute;left:-26px;top:7px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--brand-1)}
+.tl-item .when{font-family:var(--mono);font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.tl-item h4{font-size:.98rem;margin:2px 0 3px}
+.tl-item p{font-size:.89rem;color:var(--ink-2);margin-bottom:0}
+
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:.89rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--bg-soft)}
+td code{font-family:var(--mono);font-size:.84em;background:var(--bg-tint);padding:2px 6px;border-radius:5px;color:var(--accent)}
+tr:last-child td{border-bottom:none}
+
+/* ---------- quote / reflection ---------- */
+.reflection{background:var(--bg-soft);border-radius:16px;padding:28px 26px;margin:24px 0}
+.reflection p{font-size:1rem;color:var(--ink-2);margin-bottom:14px}
+.reflection p:last-child{margin-bottom:0}
+.pull{
+    border-left:3px solid var(--brand-2);padding:6px 0 6px 20px;
+    font-size:1.03rem;color:var(--ink);font-style:italic;margin:22px 0;
+}
+.note{background:var(--warn-bg);border:1px solid #f3e0bd;border-radius:10px;padding:14px 18px;margin:20px 0;font-size:.86rem;color:#7a4a08}
+.note b{color:var(--warn)}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0;background:var(--ink);color:#cbd2dd}
+footer .wrap{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:center}
+footer a{color:#fff}
+footer .fl{display:flex;gap:20px;flex-wrap:wrap;font-size:.89rem}
+footer p{font-size:.85rem;color:#98a2b3;margin:0}
+
+/* ---------- responsive ---------- */
+@media(max-width:760px){
+    .nav-links{gap:1rem}
+    section{padding:52px 0}
+    h1{max-width:none}
+    .diagram{padding:18px 14px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">Ruiyu Wang <span>/ Case Study</span></a>
+    <ul class="nav-links">
+      <li><a href="#context">Context</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#contract">Human&#8209;AI Contract</a></li>
+      <li><a href="#alternatives">Trade-offs</a></li>
+      <li><a href="#outcome">Outcome</a></li>
+      <li><a href="index.html">&#8592; Portfolio</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="badge"><i></i> Product case study · MVP delivered</div>
+    <h1>An AI knowledge assistant for 3,000+ employees who needed answers, not documents</h1>
+    <p class="lead">
+      A retrieval-augmented assistant for employee training in a production-planning department of a
+      German automotive OEM in China. I owned the whole chain: interviews, product definition,
+      prototype, PRD, RAG pipeline, and the interface contract that keeps a probabilistic
+      system honest.
+    </p>
+
+    <div class="meta-grid">
+      <div><dt>Role</dt><dd>Product &amp; UX definition, technical delivery — sole owner</dd></div>
+      <div><dt>Scope</dt><dd>Enterprise training knowledge assistant (MVP v1)</dd></div>
+      <div><dt>Method</dt><dd>Interviews → personas → PRD → prototype → RAG build</dd></div>
+      <div><dt>Stack</dt><dd>Dynamic workflow orchestration, multi-source RAG, confidence scoring</dd></div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="ai-prototype.html">Open the interactive prototype &rarr;</a>
+      <a class="btn btn-ghost" href="index.html">Back to portfolio</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 01 CONTEXT ================= -->
+<section id="context">
+  <div class="wrap">
+    <div class="sec-num">01 / CONTEXT</div>
+    <h2>The problem was not a missing document. It was a missing answer.</h2>
+    <p class="lead">
+      New joiners in the training function spent an average of <strong>45 minutes</strong> locating a
+      single answer inside several hundred pages of training material. When they did ask a colleague,
+      a single question consumed about <strong>15 minutes</strong> of that colleague's working time.
+      The content existed. The path to it did not.
+    </p>
+
+    <div class="fact">
+      <div class="lbl">Why this mattered</div>
+      <p>
+        The training team reached <strong>3,000+ employees per year</strong>. At that scale, "find the
+        document" stops being a personal inconvenience and becomes an organisational tax — paid in
+        onboarding time, in expert time diverted from real work, and in answers that never arrive.
+      </p>
+    </div>
+
+    <h3>What the request actually was</h3>
+    <p>
+      The brief I received was framed as a <em>knowledge-management tool</em>: build a system over the
+      documentation. My first job was to argue that this framing was wrong. A document search tool
+      optimises the wrong moment — the one where someone already knows what they need and only lacks
+      the pointer. Training questions are different: the asker usually does not yet know what the
+      right question is.
+    </p>
+    <p>
+      So I reframed the objective before writing any specification: <strong>not "find the document",
+      but "close the question"</strong> — and that reframing decided the architecture, the interface,
+      and the definition of success that followed.
+    </p>
+  </div>
+</section>
+
+<!-- ================= 02 RESEARCH ================= -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-num">02 / RESEARCH &amp; PRODUCT DEFINITION</div>
+    <h2>Finding the real question behind the question</h2>
+    <p class="lead">
+      Before designing the assistant, I had to find out what people were actually asking when they
+      said they were "looking something up". This was the part of the work that shaped the product most.
+    </p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="k">STEP 01</span>
+        <h4>Interviews with the askers</h4>
+        <p>I interviewed new joiners and training staff to map what they were really trying to
+        achieve, not just which keywords they typed. Most "document" questions turned out to be
+        <strong>procedural</strong> — "what do I do next" — and those have no single keyword answer.</p>
+      </div>
+      <div class="card">
+        <span class="k">STEP 02</span>
+        <h4>Personas &amp; positioning</h4>
+        <p>I segmented users by <em>role and question type</em> rather than by seniority, because the
+        two questions the system gets asked differ by workflow, not by age. Each persona carries a
+        distinct intent class, and intent class is what drives the retrieval path.</p>
+      </div>
+      <div class="card">
+        <span class="k">STEP 03</span>
+        <h4>Function list, flow &amp; PRD</h4>
+        <p>From the personas I derived the feature list, the user flow and a written PRD — including
+        the acceptance criteria the retrieval layer had to satisfy before the interface could ship.</p>
+      </div>
+    </div>
+
+    <h3>The research finding that shaped the architecture</h3>
+    <p>
+      One pattern came up repeatedly and it was not about content volume. New joiners did not need
+      <em>more</em> documentation; they needed to know <strong>whether the answer they were given was
+      safe to act on</strong>. In their words: they could not tell the difference between a confident
+      answer and a confident-sounding wrong answer, because the source material they had was too long
+      to verify.
+    </p>
+    <p>
+      That finding is why the system I built has a confidence model, a source trail on every answer,
+      and an explicit "I don't know" path — instead of a chat box that always produces a paragraph.
+    </p>
+
+    <div class="pull">
+      If the assistant is wrong, the cost is not a bad sentence. It is a new employee acting on a
+      confident error in a production environment. Design for that, not for the demo.
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 ARCHITECTURE ================= -->
+<section id="architecture">
+  <div class="wrap">
+    <div class="sec-num">03 / SYSTEM ARCHITECTURE</div>
+    <h2>A pipeline built around intent, not a search box</h2>
+    <p class="lead">
+      The system I specified and built routes every question through four stages. The critical design
+      decision sits in stage one: <strong>classifying the question type before deciding how to
+      answer it</strong>, rather than retrieving first and interpreting afterwards.
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 940 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram of the AI knowledge assistant pipeline">
+        <defs>
+          <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+          </linearGradient>
+          <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 Z" fill="#9aa3b2"/>
+          </marker>
+        </defs>
+
+        <!-- stage boxes -->
+        <g>
+          <rect x="12" y="40" width="176" height="96" rx="12" fill="url(#gA)"/>
+          <text x="100" y="72" fill="#fff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle">1 · Intent routing</text>
+          <text x="100" y="94" fill="#e7e9f5" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Classify question type</text>
+          <text x="100" y="111" fill="#e7e9f5" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">language auto-detect</text>
+          <text x="100" y="128" fill="#d6daf0" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">procedural · factual · comparative</text>
+        </g>
+
+        <g>
+          <rect x="222" y="40" width="176" height="96" rx="12" fill="#fff" stroke="#d8dce6"/>
+          <text x="310" y="72" fill="#1c1f27" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle">2 · Orchestration</text>
+          <text x="310" y="94" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Dynamic prompt chain</text>
+          <text x="310" y="111" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">built per question type</text>
+          <text x="310" y="128" fill="#6b7280" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">not one fixed QA path</text>
+        </g>
+
+        <g>
+          <rect x="432" y="40" width="176" height="96" rx="12" fill="#fff" stroke="#d8dce6"/>
+          <text x="520" y="72" fill="#1c1f27" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle">3 · Retrieval</text>
+          <text x="520" y="94" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Multi-source RAG</text>
+          <text x="520" y="111" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">chunking · re-ranking</text>
+          <text x="520" y="128" fill="#6b7280" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">images &amp; tables kept as evidence</text>
+        </g>
+
+        <g>
+          <rect x="642" y="40" width="176" height="96" rx="12" fill="#fff" stroke="#d8dce6"/>
+          <text x="730" y="72" fill="#1c1f27" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle">4 · Grounding</text>
+          <text x="730" y="94" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Confidence scoring</text>
+          <text x="730" y="111" fill="#3d4351" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">source citation attached</text>
+          <text x="730" y="128" fill="#6b7280" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">guided follow-up if unsure</text>
+        </g>
+
+        <g>
+          <rect x="852" y="40" width="76" height="96" rx="12" fill="#e6f4f1" stroke="#0f766e"/>
+          <text x="890" y="80" fill="#0f766e" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle">Answer</text>
+          <text x="890" y="99" fill="#0f766e" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">+ trail</text>
+        </g>
+
+        <!-- arrows -->
+        <g stroke="#9aa3b2" stroke-width="1.6" fill="none" marker-end="url(#arw)">
+          <path d="M188,88 L218,88"/>
+          <path d="M398,88 L428,88"/>
+          <path d="M608,88 L638,88"/>
+          <path d="M818,88 L848,88"/>
+        </g>
+
+        <!-- feedback loop -->
+        <path d="M730,136 L730,214 L310,214 L310,140" stroke="#8b5cf6" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arw)"/>
+        <rect x="418" y="196" width="212" height="36" rx="9" fill="#f5f0ff" stroke="#c4b5fd"/>
+        <text x="524" y="211" fill="#5b21b6" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle">Knowledge-gap report</text>
+        <text x="524" y="225" fill="#6d28d9" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">unanswered → content fix → data flywheel</text>
+
+        <text x="12" y="268" fill="#6b7280" font-family="Inter,sans-serif" font-size="10.5">Human stays in control at three points: choosing the intent path, answering a follow-up, and approving the final action.</text>
+      </svg>
+      <div class="legend">
+        <span><i style="background:#667eea"></i> Designed &amp; owned by me</span>
+        <span><i style="background:#fff;border:1px solid #d8dce6"></i> Implemented with the engineering team</span>
+        <span><i style="background:#e6f4f1;border:1px solid #0f766e"></i> Output</span>
+        <span><i style="background:#c4b5fd"></i> Feedback loop I designed</span>
+      </div>
+    </div>
+
+    <h3>Why a dynamic workflow instead of one fixed chain</h3>
+    <p>
+      The retrieval corpus mixes policy documents, step-by-step procedures, comparison tables and
+      illustrated instructions. A single retrieval-then-generate chain handles the middle of that
+      range well and the edges badly. Routing by intent lets a procedural question pull the step
+      sequence in order, a factual question pull a short cited excerpt, and a comparative question
+      pull two sources side by side and reconcile them.
+    </p>
+    <p>
+      The same routing layer also handles <strong>language auto-detection</strong>, so a user can ask
+      in the language they think in and still receive an answer in the language of the source
+      material — which matters when the corpus itself is multilingual.
+    </p>
+
+    <h3>Grounding as a product feature</h3>
+    <p>
+      "Grounding" here is not an implementation detail; it is the part of the product a user
+      actually experiences. Every answer carries the passage it came from, image evidence where the
+      source contained a diagram, and a follow-up suggestion so the conversation has a next step
+      instead of a dead end. Short-term memory keeps the thread coherent across turns.
+    </p>
+  </div>
+</section>
+
+<!-- ================= 04 HUMAN-AI CONTRACT ================= -->
+<section id="contract">
+  <div class="wrap">
+    <div class="sec-num">04 / THE HUMAN&#8209;AI CONTRACT</div>
+    <h2>Four states the interface has to support — and what the user is owed in each</h2>
+    <p class="lead">
+      This is the part of the work I would put in front of a design review first. An assistant that
+      only handles the happy path is not a product. These four states are the actual surface area,
+      and each one carries an explicit obligation to the user.
+    </p>
+
+    <div class="states">
+      <div class="state">
+        <div class="state-top"><span class="dot g"></span><span class="t">Confident answer</span><span class="n">STATE 01</span></div>
+        <div class="state-body">
+          <p>Retrieval was strong and the answer is grounded. The interface states the answer
+          directly, shows a <strong>confidence level</strong>, and attaches the <strong>source
+          passage</strong> with image evidence where relevant.</p>
+          <p>Offered next: two or three follow-up questions so the user can move on without
+          re-typing a query.</p>
+        </div>
+        <div class="state-foot"><b>Owed to the user:</b> speed, and the ability to verify in one click.</div>
+      </div>
+
+      <div class="state">
+        <div class="state-top"><span class="dot a"></span><span class="t">Partial answer → guided follow-up</span><span class="n">STATE 02</span></div>
+        <div class="state-body">
+          <p>Retrieval found relevant material but not enough to answer. Rather than guessing, the
+          assistant <strong>narrows the question</strong> — offering the plausible interpretations as
+          a short list to disambiguate.</p>
+          <div class="q-chip">New joiner vs. existing employee?</div>
+          <div class="q-chip">Domestic travel vs. international?</div>
+          <div class="q-chip">Standard vs. expedited approval?</div>
+        </div>
+        <div class="state-foot"><b>Owed to the user:</b> a cheap way to repair the question, not a wrong answer.</div>
+      </div>
+
+      <div class="state">
+        <div class="state-top"><span class="dot p"></span><span class="t">Low confidence → visible uncertainty</span><span class="n">STATE 03</span></div>
+        <div class="state-body">
+          <p>Evidence is thin. The answer states plainly that it is <strong>not confident</strong>,
+          shows what it did find, and marks the claim as unverified instead of presenting it as
+          fact. Uncertainty is displayed, not smoothed over.</p>
+        </div>
+        <div class="state-foot"><b>Owed to the user:</b> to know the difference before acting.</div>
+      </div>
+
+      <div class="state">
+        <div class="state-top"><span class="dot b"></span><span class="t">Knowledge gap → routed to a human</span><span class="n">STATE 04</span></div>
+        <div class="state-body">
+          <p>The corpus genuinely does not cover it. The system does not improvise — it <strong>files
+          a gap report</strong> with the question, what was searched and what was missing, so content
+          owners can fix the source and the next person gets a real answer.</p>
+          <p>This is the loop that turns usage into content improvement.</p>
+        </div>
+        <div class="state-foot"><b>Owed to the user:</b> an honest "not yet" — and a way to get it fixed.</div>
+      </div>
+    </div>
+
+    <h3>The design rule underneath all four</h3>
+    <p>
+      A language model will always be able to produce a fluent answer. The designer's job is to make
+      the interface <strong>resist the temptation to always produce one</strong>. Every state above
+      is a place where the product is allowed to be incomplete, and each one tells the user exactly
+      how incomplete it is.
+    </p>
+    <p>
+      The same logic drove the front end: a zero-friction HTML interface rather than a tool people
+      have to be trained on. In a training context, an interface that requires learning is an
+      interface that will not be used.
+    </p>
+  </div>
+</section>
+
+<!-- ================= 05 ALTERNATIVES ================= -->
+<section id="alternatives">
+  <div class="wrap">
+    <div class="sec-num">05 / TRADE-OFFS I MADE</div>
+    <h2>Two designs I rejected — and why</h2>
+    <p class="lead">
+      The most useful thing I can show about a product is not only the thing I shipped, but the
+      alternatives I understood well enough to turn down. These were the two real forks in the road.
+    </p>
+
+    <div class="alt">
+      <div class="alt-head">
+        <span class="tag">Rejected</span>
+        <span class="rejected">Fixed FAQ list + search box</span>
+      </div>
+      <h4>The cheaper build, and the one the brief asked for</h4>
+      <p>
+        A static list of the 200 most-asked questions, each with a curated written answer. It is
+        faster to build, trivially accurate, and completely bypasses the model.
+      </p>
+      <p>
+        It also fails the moment a question is not on the list, which is most of a new joiner's
+        actual experience — they do not yet know what the FAQ contains, so they cannot search for it.
+        It solves the expert's question ("which question is answered?") rather than the beginner's
+        ("I don't know where to start?").
+      </p>
+      <p class="why">
+        <strong>Why I rejected it:</strong> it optimises for the retrieval of known questions. The
+        population with the sharpest need is the one least able to name the question. The cost was
+        accepted because the routing layer lets the system handle known <em>and</em> unknown question
+        types in one path.
+      </p>
+    </div>
+
+    <div class="alt">
+      <div class="alt-head">
+        <span class="tag">Rejected</span>
+        <span class="rejected">Pure chat interface, answer as a paragraph</span>
+      </div>
+      <h4>The most familiar pattern, and the one users expect</h4>
+      <p>
+        A clean chat transcript. The model answers in fluent prose, and the conversation feels
+        natural and fast — the demo looks better than anything else in the room.
+      </p>
+      <p>
+        But prose is exactly the format in which a wrong answer is most persuasive, and it is the
+        format that hides the provenance of the answer. A user reading a paragraph has no way to
+        know which sentence came from the policy and which was generated.
+      </p>
+      <p class="why">
+        <strong>Why I rejected it:</strong> it optimises for the first thirty seconds of the
+        interaction and leaves the user unequipped for the moment they act on the answer. The answer
+        card with a confidence level and an attached source passage is less elegant and far more
+        defensible — and defensibility is what the use case requires.
+      </p>
+    </div>
+
+    <div class="note">
+      <b>A note on the limits of the MVP:</b> the assistant was delivered as a working MVP, not a
+      mature product. Enterprise platform integrations with the wider document landscape were scoped
+      as a later milestone rather than shipped in v1 — a deliberate choice to keep the grounding
+      quality high rather than widen the corpus before the confidence model was trustworthy.
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 OUTCOME ================= -->
+<section id="outcome">
+  <div class="wrap">
+    <div class="sec-num">06 / OUTCOME</div>
+    <h2>What changed</h2>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="v">15 min &rarr; <small>seconds</small></div>
+        <div class="d">Average time to resolve a training question, versus the previous
+        manual-handling baseline.</div>
+      </div>
+      <div class="metric">
+        <div class="v">45 min &rarr; <small>~1 min</small></div>
+        <div class="d">Time to locate a specific answer inside several hundred pages of training
+        material.</div>
+      </div>
+      <div class="metric">
+        <div class="v">3,000+</div>
+        <div class="d">Employees covered annually by the training function that this assistant
+        serves.</div>
+      </div>
+      <div class="metric">
+        <div class="v">&gt;90% <small>target</small></div>
+        <div class="d">Target answer-adoption rate set for the MVP — a defined acceptance criterion
+        rather than a measured result.</div>
+      </div>
+    </div>
+
+    <h3>Beyond the metric</h3>
+    <p>
+      The number I would put in front of a user is the second one: 45 minutes to about a minute.
+      The first metric (15 minutes to seconds) matters because it converts expert time back into
+      training capacity, which is the resource that was actually scarce.
+    </p>
+    <p>
+      I am deliberately reporting the adoption figure as a <strong>target</strong>. The MVP was
+      delivered and validated; the measured adoption rate over sustained use was the next
+      measurement, not one I can quote today. Separating "we set this bar" from "we cleared this bar"
+      is the difference between a portfolio claim and a marketing claim, and only the first one is
+      worth anything in an interview.
+    </p>
+
+    <h3>What I would do next</h3>
+    <ul>
+      <li><strong>Measure the states, not the traffic.</strong> The interface instruments four
+      states, but what I actually want is the distribution between them — how often users land in
+      the guided-follow-up state, and how often the system routes to a human. That distribution is the
+      real quality metric of a retrieval system.</li>
+      <li><strong>Close the loop in the other direction.</strong> The gap report tells content owners
+      what is missing. The same data should tell them which of their existing documents nobody ever
+      reaches, which is a more embarrassing and more actionable finding.</li>
+      <li><strong>Make the confidence level explainable.</strong> A percentage tells the user how
+      much to trust the answer. It does not tell them <em>why</em>, or what would change it. The
+      next step is turning the confidence breakdown into a sentence a person can act on.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 07 REFLECTION ================= -->
+<section id="reflection">
+  <div class="wrap">
+    <div class="sec-num">07 / REFLECTION</div>
+    <h2>What this project taught me about designing with AI</h2>
+
+    <div class="reflection">
+      <p>
+        <strong>1. The design problem moved from the interface to the contract.</strong> With a
+        deterministic system, the interface has to be right about <em>input</em>. With a
+        probabilistic one, the interface has to be right about <em>epistemics</em> — how confident
+        the system is, what it is based on, and what it does not know. That is a different craft, and
+        it is closer to information design than to screen design.
+      </p>
+      <p>
+        <strong>2. The most valuable output of the research was a constraint, not a feature.</strong>
+        "Show the source and show the confidence" came directly from one interview finding, and it
+        changed the architecture more than any other single decision in the project.
+      </p>
+      <p>
+        <strong>3. "Unhappy paths" are the actual product.</strong> For a document search, the happy
+        path is a search. For an AI assistant, the happy path is roughly one of four states. Designing
+        only the confident answer would have produced something impressive in a demo and unusable in
+        a plant.
+      </p>
+    </div>
+
+    <div class="cta-row" style="margin-top:34px">
+      <a class="btn btn-primary" href="ai-prototype.html">Open the interactive prototype &rarr;</a>
+      <a class="btn btn-ghost" href="index.html">&#8592; Back to portfolio</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p><strong style="color:#fff">Ruiyu Wang</strong> — HCI Designer &amp; AI Product Researcher</p>
+      <p>Human-computer interaction master&rsquo;s, Bauhaus-Universität Weimar · MSc cognitive science, Universität Tübingen</p>
+    </div>
+    <div class="fl">
+      <a href="mailto:ruiyu_wang@outlook.com">ruiyu_wang@outlook.com</a>
+      <a href="https://www.linkedin.com/in/ruiyuwang" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="index.html">Portfolio home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
